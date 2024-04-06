@@ -11,7 +11,7 @@ function App() {
   return (
     <div className='relative bg-black text-white'>
       <Navbar />
-      <div className='flex flex-col gap-5 bg-red-300	'>
+      <div className='flex flex-col gap-0'>
         <Hero />
         <Countries />
         <HeardAboutUs />
