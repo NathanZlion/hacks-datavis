@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    .hear-wrapper {
+        @apply text-white min-h-[calc(100vh-150px)] h-fit p-2 md:p-10 md:px-40 flex justify-start flex-col w-full overflow-hidden gap-3 bg-sky-950
+        bg-gradient-to-b from-sky-950 from-10% via-slate-900 via-50% to-black to-[99%] 
+    }
+
+    .title {
+        @apply text-4xl
+    }
+}
+
+text {
+    @apply text-white
+}

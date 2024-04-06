@@ -5,6 +5,6 @@
 
 @layer components {
    nav {
-       @apply w-full text-3xl bg-gray-950 fixed mb-10 justify-center z-50 p-5
+       @apply w-full text-3xl  bg-gray-500 fixed mb-10 justify-center z-50 p-5
     } 
 }

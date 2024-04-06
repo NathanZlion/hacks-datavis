@@ -1,9 +1,9 @@
 
 export const Footer = () => {
     return (
-        <footer className="bg-gray-900 text-white text-center m-0">
+        <footer className="text-white text-center m-0 bg-transparent">
             <div className="container mx-auto">
-                <p>&copy; {new Date().getFullYear()} Your Company Name. All rights reserved.</p>
+                <p>&copy; 2024 A2SV All rights reserved.</p>
             </div>
         </footer>
     );

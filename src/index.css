@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 
+html {
+  scroll-behavior: smooth;
+}
 
 img {
     width: 100%;
@@ -10,7 +13,11 @@ img {
     object-fit: cover;
 }
 
-* {
-  /* for debugging purpose only */
-  /* outline: solid 2px red; */
+text {
+  color: white !important;
 }
+
+/* for debugging purpose only */
+/* * {
+  outline: solid 2px red;
+} */

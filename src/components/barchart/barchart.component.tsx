@@ -3,32 +3,24 @@
 import Chart from "react-google-charts"
 
 export const data = [
-    ["City", "2010 Population", "2000 Population"],
-    ["New York City, NY", 8175000, 8008000],
-    ["Los Angeles, CA", 3792000, 3694000],
-    ["Chicago, IL", 2695000, 2896000],
-    ["Houston, TX", 2099000, 1953000],
-    ["Philadelphia, PA", 1526000, 1517000],
+    ["Country", "Number of Participants"],
+    ["South Africa", 46],
+    ["Somalia",  18],
+    ["Ethiopia",  23],
+    ["Djibouti",  12],
+    ["Algeria",  38],
 ];
 
 export const options = {
-    chart: {
-        title: "Population of Largest U.S. Cities",
-        subtitle: "Based on most recent and previous census data",
-    },
     hAxis: {
-        title: "Total Population",
         minValue: 0,
     },
     vAxis: {
         title: "City",
     },
     bars: "horizontal",
-    axes: {
-        y: {
-            0: { side: "right" },
-        },
-    },
+    backgroundColor: "transparent",
+    legend: "none"
 };
 
 
