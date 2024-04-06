@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    .hero-wrapper {
+        @apply  text-white  min-h-[calc(100vh-20px)] p-10 pt-40 flex justify-between flex-col bg-slate-800
+    }
+}
