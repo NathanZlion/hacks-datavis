@@ -1,6 +1,6 @@
 import a2svLogo from '../../assets/A2SV_LOGO.svg';
 import { Count } from '../Count/count.component';
-import downarrow from '../../assets/down-arrow.svg'
+import downarrow from '../../assets/downward-arrow.svg'
 import './hero.css';
 
 export const Hero = () => {
@@ -20,9 +20,9 @@ export const Hero = () => {
             <hr />
 
             {/* a stylish arrow down */}
-            <a href="#" className='w-10 mx-auto'>
+            <a href="#country_distribution" className='w-10 mx-auto '>
                 <button>
-                    <img src={downarrow} alt="down arrow" className='text-white' />
+                    <img src={downarrow} alt="down arrow"/>
                 </button>
             </a>
             
