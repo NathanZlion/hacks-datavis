@@ -1,5 +1,5 @@
 import a2svLogo from '../../assets/A2SV_LOGO.svg';
-import { Count } from '../Count/count.component';
+import { Count } from '../count/count.component';
 import downarrow from '../../assets/downward-arrow.svg'
 import './hero.css';
 

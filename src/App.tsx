@@ -1,6 +1,6 @@
 import './App.css'
 import { Hero } from './components/Hero/hero.component'
-import { Countries } from './components/Countries/countries.component'
+import { Countries } from './components/countries/countries.component'
 import { HeardAboutUs } from './components/Hear-About-Us/hear.component'
 import { Navbar } from './components/Navbar/navbar.component'
 import { Footer } from './components/footer/footer.component'
