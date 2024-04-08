@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export const countriesSlice = createSlice({
     name: 'countries',
@@ -6,13 +6,13 @@ export const countriesSlice = createSlice({
         value: {}
     },
     reducers: {
-        fetchCountries: state => {
-            state.value = { name: 'Nigeria' };
+        updateCountries: (state, payload: PayloadAction< {} | Map<string, number>>) => {
+            state.value = payload;
         }
     }
 });
 
 
-export const { fetchCountries } = countriesSlice.actions;
+export const { updateCountries } = countriesSlice.actions;
 
 export default countriesSlice.reducer;
