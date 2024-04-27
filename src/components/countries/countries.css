@@ -20,4 +20,8 @@
     .africaMap {
         @apply w-96
     }
+
+    .pie-bar-chart-wrapper {
+        @apply w-full max-w-full overflow-hidden p-0 justify-center row-span-2 col-span-1 lg:row-span-1 lg:col-span-2
+    }
 }

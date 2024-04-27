@@ -1,0 +1,18 @@
+.chart-wrapper {
+    overflow-y: scroll;
+    height: fit-content;
+    max-height: 900px;
+    overflow-x: hidden;
+    color: aliceblue;
+}
+
+#detailedCharts text {
+}
+
+.barchart text{
+    fill: #FFFFFF !important;
+}
+    
+.google-visualization-tooltip path{
+    fill: #000000 !important;
+}
