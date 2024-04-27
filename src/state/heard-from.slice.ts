@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 export const heardFromSlice = createSlice({
     name: 'heard-from',
     initialState: {
-        value: {}
+        value: []
     },
     reducers: {
-        updateHeardFromData: (state, payload) => {
+        updateHeardFromData: (state, payload: any) => {
             state.value = payload;
         }
     }
