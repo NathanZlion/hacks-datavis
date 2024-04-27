@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { IoReloadOutline } from "react-icons/io5";
 import loadingGif from '../../assets/loading.gif';
 import Snackbar from 'awesome-snackbar';
+import { ApiService } from '../../services/apiService';
 
 
 export const Navbar = () => {
@@ -17,21 +18,18 @@ export const Navbar = () => {
     const  handleReload = async () => {
         try {
             dispatch(startLoading()); // Dispatch a pending action
+            // const countryData = await ApiService.getAll("Countries");
+            const heardFromData =  await ApiService.getHeardFrom();
+            // const participantData = await ApiService.getAll("Participants")
 
-            // Simulating an asynchronous API call with a delay
-            await new Promise(resolve => setTimeout(resolve, 1000));
-
+            
             // Dispatch actions to update slices' state
-            dispatch(updateCountries({}));
-            dispatch(updateHeardFromData({}));
-            dispatch(updateParticipantsInfo({
-                totalParticipants: 3,
-                individualParticipants: 2,
-                groups: 4,
-                countries: 54
-            }));
+            // dispatch(updateCountries(countryData));
+            dispatch(updateHeardFromData(heardFromData as [string, number][] & void));
+            // dispatch(updateParticipantsInfo(participantData));
 
             dispatch(loadComplete());
+
             new Snackbar('Refresh Sucessfull', {
                 position: 'top-center',
                 actionText: 'X',
@@ -65,8 +63,16 @@ export const Navbar = () => {
         }
     };
 
+    
     useEffect(() => {
         handleReload();
+        // const MILLISECONDS_IN_MINUTE = 60000;
+
+        // const interval = setInterval(() => {
+        //     handleReload();
+        // }, MILLISECONDS_IN_MINUTE/3);
+
+        // return () => clearInterval(interval);
     }, []);
 
 
