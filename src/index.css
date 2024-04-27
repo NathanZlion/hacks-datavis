@@ -14,7 +14,7 @@ img {
 }
 
 text {
-  color: white !important;
+    fill: #FFFFFF !important;
 }
 
 /* for debugging purpose only */
