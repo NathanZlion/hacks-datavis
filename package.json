@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
     "awesome-snackbar": "^2.0.7",
+    "axios": "^1.6.8",
     "che-react-number-easing": "^0.1.4",
     "react": "^18.2.0",
     "react-africa-map": "^1.1.2",
