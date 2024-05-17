@@ -3,7 +3,7 @@ import './navbar.css'
 import { grandStateEnum, loadComplete, loadFailed, startLoading } from '../../state/grandstate.slice'
 import { updateCountries } from '../../state/countries.slice';
 import { updateHeardFromData } from '../../state/heard-from.slice';
-import { updateParticipantsInfo } from '../../state/people.slice';
+import { peopleDataInterface, updateParticipantsInfo } from '../../state/people.slice';
 import { useEffect } from 'react';
 import { IoReloadOutline } from "react-icons/io5";
 import loadingGif from '../../assets/loading.gif';
@@ -20,12 +20,15 @@ export const Navbar = () => {
             dispatch(startLoading()); // Dispatch a pending action
             // const countryData = await ApiService.getAll("Countries");
             const heardFromData =  await ApiService.getHeardFrom();
+            const summaryData =  await ApiService.getSummaryData();
             // const participantData = await ApiService.getAll("Participants")
 
             
             // Dispatch actions to update slices' state
             // dispatch(updateCountries(countryData));
             dispatch(updateHeardFromData(heardFromData as [string, number][] & void));
+
+            dispatch(updateParticipantsInfo(summaryData as peopleDataInterface));
             // dispatch(updateParticipantsInfo(participantData));
 
             dispatch(loadComplete());

@@ -1,7 +1,7 @@
 
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface peopleDataInterface {
+export interface peopleDataInterface {
     totalParticipants: number,
     individualParticipants: number,
     groups: number,
