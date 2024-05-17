@@ -1,4 +1,6 @@
 import axios from "axios";
+import { peopleDataInterface } from "../state/people.slice";
+import { PiCoinsBold } from "react-icons/pi";
 
 // define a type for the response data
 interface ReachoutResponce {
@@ -33,7 +35,18 @@ export class ApiService {
 
     }
 
-    static async getSummaryData () {
-
+    static  getSummaryData = async () : Promise<peopleDataInterface | void>  => {
+        try {
+            const BASE_URL = import.meta.env.VITE_BASE_URL;
+            let response = await axios.get(`${BASE_URL}/summary`);
+            console.log(response.data);
+            if (response.data.message !== "success" ) {
+                return;
+            } else {
+                return response.data.data;
+            }
+        } catch (error) {
+            return;
+        }
     }
 }
