@@ -1,5 +1,6 @@
 import './countries.css';
 // ignore this error since the package does not have types
+// @ts-ignore
 import AfricaMap from 'react-africa-map';
 import { Chart } from 'react-google-charts';
 import { BarChart } from '../barchart/barchart.component';
