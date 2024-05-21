@@ -1,6 +1,5 @@
 import axios from "axios";
 import { peopleDataInterface } from "../state/people.slice";
-import { PiCoinsBold } from "react-icons/pi";
 
 // define a type for the response data
 interface ReachoutResponce {
