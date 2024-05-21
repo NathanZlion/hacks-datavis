@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './navbar.css'
 import { grandStateEnum, loadComplete, loadFailed, startLoading } from '../../state/grandstate.slice'
-import { updateCountries } from '../../state/countries.slice';
+// import { updateCountries } from '../../state/countries.slice';
 import { updateHeardFromData } from '../../state/heard-from.slice';
 import { peopleDataInterface, updateParticipantsInfo } from '../../state/people.slice';
 import { useEffect } from 'react';

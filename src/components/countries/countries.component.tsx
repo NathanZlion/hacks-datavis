@@ -8,8 +8,8 @@ import { useSelector } from 'react-redux';
 
 // read the documentation
 // https://www.npmjs.com/package/react-africa-map 
-
 export const data = [
+
     ["Country", "Participants"],
     ["South Africa", 13],
     ["Somalia", 8],
@@ -39,6 +39,7 @@ export const Countries = () => {
                 <AfricaMap selectColor="green"
                     selected={['MA', 'AO', 'ET', 'SO', 'EG']}
                     animeTime={1000}
+                    selection={true}
                 />
                 <Chart
                     chartType="PieChart"
