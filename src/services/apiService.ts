@@ -1,5 +1,6 @@
 import axios from "axios";
 import { peopleDataInterface } from "../state/people.slice";
+import { BASE_URL } from "../constants/variables";
 
 // define a type for the response data
 interface ReachoutResponce {
@@ -10,7 +11,7 @@ interface ReachoutResponce {
 export class ApiService {
     static async getHeardFrom () {
         try {
-            const BASE_URL = import.meta.env.VITE_BASE_URL;
+            // get env variable from process
             let response = await axios.get(`${BASE_URL}/reachout`);
             if (response.data.message !== "success"|| !Array.isArray(response.data.data)) {
                 return [];
@@ -26,7 +27,7 @@ export class ApiService {
         }
     }
 
-    static async getCountryData () {
+    static  getCountryData = async() : Promise<peopleDataInterface | void> => {
 
     }
 
@@ -36,7 +37,6 @@ export class ApiService {
 
     static  getSummaryData = async () : Promise<peopleDataInterface | void>  => {
         try {
-            const BASE_URL = import.meta.env.VITE_BASE_URL;
             let response = await axios.get(`${BASE_URL}/summary`);
             console.log(response.data);
             if (response.data.message !== "success" ) {
