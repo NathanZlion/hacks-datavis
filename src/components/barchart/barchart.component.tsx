@@ -4,7 +4,6 @@ import Chart from "react-google-charts"
 import './barchart.css';
 import { countryData } from "../../state/countries.slice";
 import { useSelector } from "react-redux";
-import { grandStateEnum } from "../../state/grandstate.slice";
 
 const INNERHEIGHT = 400; //pixels
 
