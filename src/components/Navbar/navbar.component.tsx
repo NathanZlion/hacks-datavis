@@ -9,6 +9,7 @@ import { IoReloadOutline } from "react-icons/io5";
 import loadingGif from '../../assets/loading.gif';
 import Snackbar from 'awesome-snackbar';
 import { ApiService } from '../../services/apiService';
+import { updateCountries } from '../../state/countries.slice';
 
 
 export const Navbar = () => {
@@ -18,16 +19,15 @@ export const Navbar = () => {
     const  handleReload = async () => {
         try {
             dispatch(startLoading()); // Dispatch a pending action
-            // const countryData = await ApiService.getAll("Countries");
+            const countryData = await ApiService.getCountryData();
             const heardFromData =  await ApiService.getHeardFrom();
             const summaryData =  await ApiService.getSummaryData();
             // const participantData = await ApiService.getAll("Participants")
-
+            
             
             // Dispatch actions to update slices' state
-            // dispatch(updateCountries(countryData));
+            dispatch(updateCountries(countryData));
             dispatch(updateHeardFromData(heardFromData as [string, number][] & void));
-
             dispatch(updateParticipantsInfo(summaryData as peopleDataInterface));
             // dispatch(updateParticipantsInfo(participantData));
 
@@ -36,7 +36,8 @@ export const Navbar = () => {
             new Snackbar('Refresh Sucessfull', {
                 position: 'top-center',
                 actionText: 'X',
-                onAction: () => {}
+                onAction: () => {},
+                timeout: 100,
             });
         } catch (error) {
             dispatch(loadFailed())
@@ -44,6 +45,7 @@ export const Navbar = () => {
                 actionText: 'X',
                 position: 'top-center',
                 onAction: () => {},
+                timeout: 100,
                 style: {
                     container: [
                         ['background-color', 'red'],
