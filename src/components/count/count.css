@@ -4,6 +4,10 @@
 
 
 @layer components {
+    .title {
+        @apply text-4xl
+    }
+
     .count-wrapper {
         @apply grid grid-cols-2 md:grid-cols-4 justify-center gap-3 text-center w-full md:w-4/5 mx-auto
     }
