@@ -4,8 +4,8 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 export interface peopleDataInterface {
     totalParticipants: number,
     individualParticipants: number,
-    groups: number,
-    countries: number
+    groupParticipants: number,
+    totalCountries: number
 }
 
 export const peopleSlice = createSlice({
@@ -14,8 +14,8 @@ export const peopleSlice = createSlice({
         value: {
             totalParticipants: 0,
             individualParticipants: 0,
-            groups: 0,
-            countries: 0
+            groupParticipants: 0,
+            totalCountries: 0
         }
     },
     reducers: {
