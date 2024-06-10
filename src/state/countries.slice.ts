@@ -1,12 +1,23 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+export interface countryData {
+    [key: string]: {
+        numberOfIndividualParticipants: number;
+        numberOfGroupParticipants: number;
+    };
+}
+
+
 export const countriesSlice = createSlice({
     name: 'countries',
     initialState: {
-        value: {}
+        value: {
+            payload: {
+            }
+        }
     },
     reducers: {
-        updateCountries: (state, payload: PayloadAction< {} | Map<string, number>>) => {
+        updateCountries: (state, payload: PayloadAction<countryData>) => {
             state.value = payload;
         }
     }

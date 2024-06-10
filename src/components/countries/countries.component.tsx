@@ -1,21 +1,15 @@
 import './countries.css';
 // ignore this error since the package does not have types
-// @ts-ignore
-import AfricaMap from 'react-africa-map';
 import { Chart } from 'react-google-charts';
 import { BarChart } from '../barchart/barchart.component';
 import { useSelector } from 'react-redux';
+import { countryData } from '../../state/countries.slice';
+
 
 // read the documentation
 // https://www.npmjs.com/package/react-africa-map 
 export const data = [
-
     ["Country", "Participants"],
-    ["South Africa", 13],
-    ["Somalia", 8],
-    ["Ethiopia", 1.4],
-    ["Djbouti", 2.3],
-    ["Algeria", 11],
 ];
 
 export const options = {
@@ -27,30 +21,27 @@ export const options = {
 
 
 export const Countries = () => {
-    const data: String[][] = useSelector((state: any) => state.heardFrom.value.payload);
+    const countriesData: countryData = useSelector((state: any) => state.countries.value.payload);
 
     return (
         <div className="countries-wrapper" id='country_distribution'>
             <div className="title">
-                Distribution by Country
+                Distribution By Country
             </div>
 
             <div className="countries-graphs-wrapper">
-                <AfricaMap selectColor="green"
-                    selected={['MA', 'AO', 'ET', 'SO', 'EG']}
-                    animeTime={1000}
-                    selection={true}
-                />
-                <Chart
+               <Chart
                     chartType="PieChart"
-                    data={data}
+                    data={[
+                        ["countries", "Number of Individual Participants"],
+                        // @ts-ignore
+                        ...Object.entries(countriesData).map(([key, value]) => [key, value.numberOfIndividualParticipants])
+                    ]}
                     options={options}
                     width={"100%"}
                     height={"100%"}
                 />
-                <div className="pie-bar-chart-wrapper">
-                    <BarChart title='Number of People' />
-                </div>
+                <BarChart title='Number of Individual Participants'  individual={true} />
             </div>
         </div>
     );
