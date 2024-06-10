@@ -5,7 +5,7 @@ import './barchart.css';
 import { countryData } from "../../state/countries.slice";
 import { useSelector } from "react-redux";
 
-const INNERHEIGHT = 400; //pixels
+// const INNERHEIGHT = 400; //pixels
 
 interface props {
     title: string
@@ -14,10 +14,10 @@ interface props {
 
 export const BarChart = ({ title, individual }: props) => {
     const countriesData: countryData = useSelector((state: any) => state.countries.value.payload);
-    const countriesDataArray = Object.entries(countriesData).map(([key, value]) => ({ key, value }));
-    var entriesLength = countriesData ? countriesDataArray.length - 1 : 5;
+    // const countriesDataArray = Object.entries(countriesData).map(([key, value]) => ({ key, value }));
+    // var entriesLength = countriesData ? countriesDataArray.length - 1 : 5;
     
-    var chartAreaHeight = entriesLength * INNERHEIGHT;
+    // var chartAreaHeight = entriesLength * INNERHEIGHT;
     
     const options = {
         title: title,
