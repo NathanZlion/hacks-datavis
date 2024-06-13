@@ -69,9 +69,9 @@ export const Navbar = () => {
     
     useEffect(() => {
         handleReload();
-        const MILLISECONDS_IN_MINUTE = 60000;
-        const reloadIntervalInMinutes = 10;
-        const reloadInterval = reloadIntervalInMinutes * MILLISECONDS_IN_MINUTE;
+        // const MILLISECONDS_IN_MINUTE = 60000;
+        // const reloadIntervalInMinutes = 10;
+        // const reloadInterval = reloadIntervalInMinutes * MILLISECONDS_IN_MINUTE;
 
         // const interval = setInterval(() => {
         //     handleReload();
