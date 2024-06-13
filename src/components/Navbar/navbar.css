@@ -7,8 +7,4 @@
    nav {
        @apply w-full text-3xl bg-gray-800 fixed mb-10 flex flex-row justify-between z-50 p-5
     } 
-
-    .reload-btn {
-        @apply w-8
-    }
 }

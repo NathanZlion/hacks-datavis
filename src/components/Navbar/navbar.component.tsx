@@ -3,14 +3,15 @@ import './navbar.css'
 import { grandStateEnum, loadComplete, loadFailed, startLoading } from '../../state/grandstate.slice'
 // import { updateCountries } from '../../state/countries.slice';
 import { updateHeardFromData } from '../../state/heard-from.slice';
-import { peopleDataInterface, updateParticipantsInfo } from '../../state/people.slice';
+import { summaryDataInterface, updateParticipantsInfo } from '../../state/summary.slice';
 import { useEffect } from 'react';
 import { IoReloadOutline } from "react-icons/io5";
-import loadingGif from '../../assets/loading.gif';
 import Snackbar from 'awesome-snackbar';
 import { ApiService } from '../../services/apiService';
 import { updateCountries } from '../../state/countries.slice';
-
+import a2svLogo from '../../assets/A2SV_LOGO.svg';
+import a2svLogoSmall from  '../../assets/A2SV Logo Small.svg';
+import { ColorRing } from 'react-loader-spinner';
 
 export const Navbar = () => {
     const dispatch = useDispatch();
@@ -22,14 +23,11 @@ export const Navbar = () => {
             const countryData = await ApiService.getCountryData();
             const heardFromData =  await ApiService.getHeardFrom();
             const summaryData =  await ApiService.getSummaryData();
-            // const participantData = await ApiService.getAll("Participants")
-            
-            
+
             // Dispatch actions to update slices' state
             dispatch(updateCountries(countryData));
             dispatch(updateHeardFromData(heardFromData as [string, number][] & void));
-            dispatch(updateParticipantsInfo(summaryData as peopleDataInterface));
-            // dispatch(updateParticipantsInfo(participantData));
+            dispatch(updateParticipantsInfo(summaryData as summaryDataInterface));
 
             dispatch(loadComplete());
 
@@ -71,24 +69,33 @@ export const Navbar = () => {
     
     useEffect(() => {
         handleReload();
-        // const MILLISECONDS_IN_MINUTE = 60000;
+        const MILLISECONDS_IN_MINUTE = 60000;
+        const reloadIntervalInMinutes = 10;
+        const reloadInterval = reloadIntervalInMinutes * MILLISECONDS_IN_MINUTE;
 
         // const interval = setInterval(() => {
         //     handleReload();
-        // }, MILLISECONDS_IN_MINUTE/3);
+        // }, reloadInterval);
 
         // return () => clearInterval(interval);
     }, []);
 
 
     return (
-        <nav>
-            <div>
-                A2SV Hacks 2024 - Data Visualization
+        <nav className='h-20 py-4'>
+            <div className='d-flex justify-center content-center h-auto p-2 md:p-3'>
+                <img src={a2svLogo} alt="A2SV" className='object-contain hidden md:block'/>
+                <img src={a2svLogoSmall} alt="A2SV" className='object-contain md:hidden'/>
             </div>
-            <button onClick={handleReload} className='reload-btn'>
+            <button onClick={handleReload} className='w-8 h-8 my-auto'>
                 {(grandstate === grandStateEnum.Initial || grandstate === grandStateEnum.Loaded || grandstate === grandStateEnum.Error) && <IoReloadOutline />}
-                {grandstate === grandStateEnum.Loading && <img src={loadingGif} alt="Loading" />}
+                {grandstate === grandStateEnum.Loading && 
+                <ColorRing
+                    visible={true} 
+                        height="100%" width="100%" ariaLabel="color-ring-loading" wrapperStyle={{}}
+                        wrapperClass="color-ring-wrapper"
+                        colors={['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#cce7ff']}
+                />}
             </button>
         </nav>
     );
