@@ -1,11 +1,11 @@
 
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export interface peopleDataInterface {
+export interface summaryDataInterface {
     totalParticipants: number,
     individualParticipants: number,
     groupParticipants: number,
-    totalCountries: number
+    countryCount: number
 }
 
 export const peopleSlice = createSlice({
@@ -15,11 +15,11 @@ export const peopleSlice = createSlice({
             totalParticipants: 0,
             individualParticipants: 0,
             groupParticipants: 0,
-            totalCountries: 0
+            countryCount: 0
         }
     },
     reducers: {
-        updateParticipantsInfo: (state, payload: PayloadAction<peopleDataInterface>) => {
+        updateParticipantsInfo: (state, payload: PayloadAction<summaryDataInterface>) => {
             state.value = payload.payload;
         }
     }
