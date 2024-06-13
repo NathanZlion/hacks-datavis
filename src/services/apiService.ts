@@ -1,12 +1,13 @@
 import axios from "axios";
-import { peopleDataInterface } from "../state/people.slice";
+import { summaryDataInterface } from "../state/summary.slice";
 import { BASE_URL } from "../constants/variables";
 import { countryData } from "../state/countries.slice";
 
 // define a type for the response data
 interface ReachoutResponce {
   reachoutSourceName: string;
-  numberOfParticipants: number;
+  numberOfIndividualParticipants: number;
+  numberOfGroupParticipants: number;
 }
 
 interface CountryResponseData {
@@ -29,7 +30,7 @@ export class ApiService {
         return [
           ["Heard From", "Number of Participants"],
           ...response.data.data.map((
-            { reachoutSourceName, numberOfParticipants }: ReachoutResponce) => [reachoutSourceName, numberOfParticipants])
+            { reachoutSourceName, numberOfGroupParticipants, numberOfIndividualParticipants }: ReachoutResponce) => [reachoutSourceName, numberOfGroupParticipants + numberOfIndividualParticipants])
         ];
       }
     } catch (error) {
@@ -61,11 +62,7 @@ export class ApiService {
     }
   }
 
-  static async getParticipantData() {
-
-  }
-
-  static getSummaryData = async (): Promise<peopleDataInterface | void> => {
+  static getSummaryData = async (): Promise<summaryDataInterface | void> => {
     try {
       let response = await axios.get(`${BASE_URL}/summary`);
       if (response.data.message !== "success") {
