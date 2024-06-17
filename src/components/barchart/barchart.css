@@ -1,18 +1,53 @@
 .chart-wrapper {
     overflow-y: scroll;
+    height: 100%;
+    max-height: 500px;
     height: fit-content;
-    max-height: 900px;
     overflow-x: hidden;
     color: aliceblue;
 }
 
-#detailedCharts text {
+.chart-wrapper::-webkit-scrollbar-track-piece:vertical:start {
+    background-color: #4d7fff48;
+}
+  
+
+/* Define the scrollbar style */
+.chart-wrapper::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
 }
 
-.barchart text{
+/* Define the thumb style */
+.chart-wrapper::-webkit-scrollbar-thumb {
+    background: #4d7fff;
+    border-radius: 5px;
+}
+
+/* Define the track style */
+.chart-wrapper::-webkit-scrollbar-track {
+    background-color: #ddd;
+    border: 1px solid #ccc;
+}
+
+/* Define the button style */
+.chart-wrapper::-webkit-scrollbar-button {
+    background-color: #463842;
+    border-bottom: 5px;
+}
+
+/* Define the button style when being hovered over */
+.chart-wrapper::-webkit-scrollbar-button:hover {
+    background-color: #999999;
+}
+
+
+#detailedCharts text {}
+
+.barchart text {
     fill: #FFFFFF !important;
 }
-    
-.google-visualization-tooltip path{
+
+.google-visualization-tooltip path {
     fill: #000000 !important;
 }

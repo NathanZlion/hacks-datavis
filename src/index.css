@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-color: #003d8d;
+}
 
 html {
   scroll-behavior: smooth;
@@ -15,6 +18,47 @@ img {
 
 text {
     fill: #FFFFFF !important;
+}
+
+/* define a color pallete */
+
+
+body::-webkit-scrollbar-track-piece:vertical:start {
+    background-color: #4d7fff48;
+}
+  
+
+/* Define the scrollbar style */
+body::-webkit-scrollbar {
+    width: 4px;
+    height: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    width: 10px;
+}
+
+/* Define the thumb style */
+body::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+}
+
+/* Define the track style */
+body::-webkit-scrollbar-track {
+    background-color: #ddd;
+    border: 1px solid #ccc;
+}
+
+/* Define the button style */
+body::-webkit-scrollbar-button {
+    background-color: #463842;
+    border-bottom: 5px;
+}
+
+/* Define the button style when being hovered over */
+body::-webkit-scrollbar-button:hover {
+    background-color: #999999;
 }
 
 /* for debugging purpose only */

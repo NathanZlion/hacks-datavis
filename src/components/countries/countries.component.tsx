@@ -17,6 +17,9 @@ export const options = {
     pieSliceText: "label",
     pieHole: 0.5,
     backgroundColor: "transparent",
+    sliceVisibilityThreshold: 0.03, // 20%
+    // make the label visible no matter what
+    
 };
 
 
@@ -29,6 +32,7 @@ export const Countries = () => {
                 Distribution By Country
             </div>
 
+            <div>Individual Registration</div>
             <div className="countries-graphs-wrapper">
                <Chart
                     chartType="PieChart"
@@ -43,6 +47,23 @@ export const Countries = () => {
                 />
                 <BarChart title='Number of Individual Participants'  individual={true} />
             </div>
+
+
+            {/* <div>Group Registration</div>
+            <div className="countries-graphs-wrapper">
+               <Chart
+                    chartType="PieChart"
+                    data={[
+                        ["countries", "Number of Individual Participants"],
+                        // @ts-ignore
+                        ...Object.entries(countriesData).map(([key, value]) => [key, value.numberOfGroupParticipants])
+                    ]}
+                    options={options}
+                    width={"100%"}
+                    height={"100%"}
+                />
+                <BarChart title='Number of Group Participants'  individual={false} />
+            </div> */}
         </div>
     );
 }
