@@ -2,6 +2,7 @@ import axios from "axios";
 import { summaryDataInterface } from "../state/summary.slice";
 import { BASE_URL } from "../constants/variables";
 import { countryData } from "../state/countries.slice";
+import { prevParticipationDataInterface } from "../state/prevParticipation.slice";
 
 // define a type for the response data
 interface ReachoutResponce {
@@ -59,6 +60,24 @@ export class ApiService {
       }
     } catch (error) {
       return {};
+    }
+  }
+
+  static getPreviousHackathonParticipation = async (): Promise<prevParticipationDataInterface> => {
+    try {
+      let response = await axios.get(`${BASE_URL}/prevparticipation`);
+      if (response.data.message !== "success") {
+        return response.data;
+      } else {
+        return response.data.data;
+      }
+    } catch (error) {
+      return {
+        groupNo: 0,
+        groupYes: 0,
+        individualNo: 0,
+        individualYes: 0,
+      };
     }
   }
 

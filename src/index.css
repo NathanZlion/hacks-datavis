@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --primary-color: #003d8d;
+    --primary-color: #003d8d;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 img {
@@ -26,7 +26,7 @@ text {
 body::-webkit-scrollbar-track-piece:vertical:start {
     background-color: #4d7fff48;
 }
-  
+
 
 /* Define the scrollbar style */
 body::-webkit-scrollbar {
@@ -59,6 +59,30 @@ body::-webkit-scrollbar-button {
 /* Define the button style when being hovered over */
 body::-webkit-scrollbar-button:hover {
     background-color: #999999;
+}
+
+table {
+	width: 800px;
+    border: 1px groove var(--primary-color);
+	/* border-collapse: collapse; */
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+    border: 1px groove var(--primary-color);
+    background-color: #55608f;
+	color: #fff;
+}
+
+td:hover, th:hover {
+    background-color: rgba(96, 114, 146, 0.3);
+}
+
+td {
+    text-align: center;
 }
 
 /* for debugging purpose only */

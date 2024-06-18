@@ -5,6 +5,7 @@ import { HeardAboutUs } from './components/Hear-About-Us/hear.component'
 import { Navbar } from './components/Navbar/navbar.component'
 import { Footer } from './components/footer/footer.component'
 import { Table } from './components/table/table.component'
+import { PrevHackathonPartcipation } from './components/PrevHackathonParticipation/prevHackathonParticipation.component'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         <Countries />
         <Table />
         <HeardAboutUs />
+        <PrevHackathonPartcipation />
       </div>
       <Footer />
     </div>

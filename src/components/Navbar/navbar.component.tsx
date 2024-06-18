@@ -12,6 +12,7 @@ import { updateCountries } from '../../state/countries.slice';
 import a2svLogo from '../../assets/A2SV_LOGO.svg';
 import a2svLogoSmall from  '../../assets/A2SV Logo Small.svg';
 import { ColorRing } from 'react-loader-spinner';
+import { updatePrevParticipationData } from '../../state/prevParticipation.slice';
 
 export const Navbar = () => {
     const dispatch = useDispatch();
@@ -23,11 +24,13 @@ export const Navbar = () => {
             const countryData = await ApiService.getCountryData();
             const heardFromData =  await ApiService.getHeardFrom();
             const summaryData =  await ApiService.getSummaryData();
+            const prevParticipation = await ApiService.getPreviousHackathonParticipation();
 
             // Dispatch actions to update slices' state
             dispatch(updateCountries(countryData));
             dispatch(updateHeardFromData(heardFromData as [string, number][] & void));
             dispatch(updateParticipantsInfo(summaryData as summaryDataInterface));
+            dispatch(updatePrevParticipationData(prevParticipation));
 
             dispatch(loadComplete());
 
