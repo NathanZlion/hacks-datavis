@@ -16,7 +16,7 @@
     }
     
     table {
-        @apply m-auto
+        @apply m-auto w-[80%]
     }
 }
 
