@@ -5,9 +5,8 @@
 
 @layer components {
     .countries-wrapper {
-        @apply text-white min-h-[calc(100vh-180px)] h-fit p-2 pt-40 md:p-10 md:px-40 md:pt-40 flex justify-between flex-col w-full overflow-hidden
-        bg-gradient-to-b from-black from-[3%] via-slate-900 via-30% to-sky-950 to-90% 
-    }
+        @apply min-h-[calc(100vh-180px)] h-fit p-2 pt-40 md:p-10 md:px-40 md:pt-40 flex justify-between flex-col w-full overflow-hidden
+        }
 
     .title {
         @apply text-4xl mb-10
@@ -15,10 +14,6 @@
 
     .countries-graphs-wrapper {
         @apply w-full max-w-full grid grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 overflow-hidden p-0 justify-center align-middle
-    }
-
-    .africaMap {
-        @apply w-96
     }
 
     .pie-bar-chart-wrapper {

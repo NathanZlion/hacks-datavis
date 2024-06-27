@@ -41,13 +41,12 @@
     background-color: #999999;
 }
 
-
-#detailedCharts text {}
-
-.barchart text {
+/* .barchart text {
     fill: #FFFFFF !important;
 }
 
 .google-visualization-tooltip path {
-    fill: #000000 !important;
-}
+    fill: #ffffff !important;
+} */
+
+

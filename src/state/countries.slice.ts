@@ -10,12 +10,7 @@ export interface countryData {
 
 export const countriesSlice = createSlice({
     name: 'countries',
-    initialState: {
-        value: {
-            payload: {
-            }
-        }
-    },
+    initialState: { value: { payload: {} } },
     reducers: {
         updateCountries: (state, payload: PayloadAction<countryData>) => {
             state.value = payload;

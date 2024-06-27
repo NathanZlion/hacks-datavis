@@ -2,6 +2,7 @@ import './countries.css';
 // ignore this error since the package does not have types
 import { Chart } from 'react-google-charts';
 import { BarChart } from '../barchart/barchart.component';
+// import { BarChart } from '../ui/barchart';
 import { useSelector } from 'react-redux';
 import { countryData } from '../../state/countries.slice';
 

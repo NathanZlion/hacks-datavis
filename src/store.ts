@@ -4,6 +4,7 @@ import peopleReducer from './state/summary.slice';
 import heardFromReducer from './state/heard-from.slice';
 import grandReducer from './state/grandstate.slice';
 import prevParticipationReducer from './state/prevParticipation.slice';
+import lastRefreshedReducer from './state/lastSync.slice';
 
 export default configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export default configureStore({
     people: peopleReducer,
     heardFrom: heardFromReducer,
     grandState: grandReducer,
-    prevParticipation: prevParticipationReducer
+    prevParticipation: prevParticipationReducer,
+    lastSynced: lastRefreshedReducer,
   }
 })
 
