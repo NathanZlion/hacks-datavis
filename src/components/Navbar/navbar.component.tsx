@@ -1,75 +1,70 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './navbar.css'
 import { grandStateEnum, loadComplete, loadFailed, startLoading } from '../../state/grandstate.slice'
-// import { updateCountries } from '../../state/countries.slice';
 import { updateHeardFromData } from '../../state/heard-from.slice';
 import { summaryDataInterface, updateParticipantsInfo } from '../../state/summary.slice';
 import { useEffect } from 'react';
-import { IoReloadOutline } from "react-icons/io5";
-import Snackbar from 'awesome-snackbar';
 import { ApiService } from '../../services/apiService';
 import { updateCountries } from '../../state/countries.slice';
 import a2svLogo from '../../assets/A2SV_LOGO.svg';
-import a2svLogoSmall from  '../../assets/A2SV Logo Small.svg';
-import { ColorRing } from 'react-loader-spinner';
+import a2svLogoSmall from '../../assets/A2SV Logo Small.svg';
 import { updatePrevParticipationData } from '../../state/prevParticipation.slice';
+import { ModeToggle } from '../ui/modetoggle';
+import { useToast } from '../ui/use-toast';
+import { ProgressCircle } from '@tremor/react';
 
 export const Navbar = () => {
     const dispatch = useDispatch();
     const grandstate: string = useSelector((state: any) => state.grandState.value);
+    const { toast } = useToast()
 
-    const  handleReload = async () => {
+
+    const handleReload = async () => {
         try {
             dispatch(startLoading()); // Dispatch a pending action
-            const countryData = await ApiService.getCountryData();
-            const heardFromData =  await ApiService.getHeardFrom();
-            const summaryData =  await ApiService.getSummaryData();
-            const prevParticipation = await ApiService.getPreviousHackathonParticipation();
 
-            // Dispatch actions to update slices' state
-            dispatch(updateCountries(countryData));
-            dispatch(updateHeardFromData(heardFromData as [string, number][] & void));
-            dispatch(updateParticipantsInfo(summaryData as summaryDataInterface));
-            dispatch(updatePrevParticipationData(prevParticipation));
+            const countryData = await ApiService.getCountryData();
+            if (!countryData.success) throw countryData.error;
+            dispatch(updateCountries(countryData.value));
+
+            const heardFromData = await ApiService.getHeardFrom();
+            if (!heardFromData.success) throw heardFromData.error;
+            dispatch(updateHeardFromData(heardFromData.value as [string, number][] & void));
+
+            const summaryData = await ApiService.getSummaryData();
+            if (!summaryData.success) throw summaryData.error;
+            dispatch(updateParticipantsInfo(summaryData.value as summaryDataInterface));
+
+
+            const prevParticipation = await ApiService.getPreviousHackathonParticipation();
+            if (!prevParticipation.success) throw prevParticipation.error;
+            dispatch(updatePrevParticipationData(prevParticipation.value));
 
             dispatch(loadComplete());
 
-            new Snackbar('Refresh Sucessfull', {
-                position: 'top-center',
-                actionText: 'X',
-                onAction: () => {},
-                timeout: 100,
-            });
+            toast({
+                title: "Refreshed Success",
+                description: "Your data is now upto date!",
+                className: "shadow shadow-sm shadow-slate-700 dark:shadow-white"
+
+            })
         } catch (error) {
             dispatch(loadFailed())
-            new Snackbar('Refresh Failed', {
-                actionText: 'X',
-                position: 'top-center',
-                onAction: () => {},
-                timeout: 100,
-                style: {
-                    container: [
-                        ['background-color', 'red'],
-                        ['border-radius', '5px']
-                    ],
-                    message: [
-                        ['color', '#eee'],
-                    ],
-                    bold: [
-                        ['font-weight', 'bold'],
-                    ],
-                    actionButton: [
-                        ['color', 'white'],
-                    ],
-                }
+            toast({
+                variant: "destructive",
+                title: "Uh oh, Rehresh Failed...",
+                description: "It might be due to your slow internet connection.",
+                className: "shadow shadow-sm shadow-slate-700 dark:shadow-white"
+
             });
+
             // wait for 3 seconds
             await new Promise(resolve => setTimeout(resolve, 3000));
             dispatch(loadComplete());
         }
     };
 
-    
+
     useEffect(() => {
         handleReload();
         // const MILLISECONDS_IN_MINUTE = 60000;
