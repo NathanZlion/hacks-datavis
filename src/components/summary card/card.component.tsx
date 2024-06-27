@@ -13,7 +13,7 @@ export const Card = ({title, icon, value, className}: props) => {
 
     return (
         <div className={classes}>
-            <div className="icon p-3  bg-slate-700 rounded-lg w-16 h-16  shadow-cyan-500/50 hover:shadow-indigo-500/40 shadow-md hover:shadow-3xl">
+            <div className="icon p-3 rounded-lg w-16 h-16  shadow-cyan-500/50 hover:shadow-indigo-500/40 shadow-md hover:shadow-3xl">
                 <FontAwesomeIcon icon={icon}  className="w-full h-full"/>
             </div>
             <div className="flex flex-col align-middle justify-center gap-0 m-auto">

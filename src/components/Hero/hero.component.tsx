@@ -1,6 +1,7 @@
-import { Count } from '../count/count.component';
-import downarrow from '../../assets/downward-arrow.svg'
+import { Count } from '../Count/count.component';
 import './hero.css';
+import { HorizontalLine } from '../ui/divider';
+import { ArrowBigDown } from 'lucide-react';
 
 export const Hero = () => {
     return (
@@ -9,12 +10,12 @@ export const Hero = () => {
                 <Count />
             </div>
 
-            <hr />
+            <HorizontalLine />
 
             {/* a stylish arrow down */}
-            <a href="#country_distribution" className='w-10 mx-auto '>
+            <a href="#country_distribution" className='w-16 h-16 mx-auto dark:bg-slate-800 rounded-full flex align-middle justify-center hover:shadow-lg hover:shadow-white hover:animate-pulse'>
                 <button>
-                    <img src={downarrow} alt="down arrow"/>
+                    <ArrowBigDown className='text-primary dark:text-white'/>
                 </button>
             </a>
             

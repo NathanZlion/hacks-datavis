@@ -7,7 +7,6 @@ const options = {
     pieSliceText: "label",
     pieHole: 0.5,
     backgroundColor: "transparent",
-    legendTextStyle: { color: '#FFF', fontSize: '100px' },
 };
 
 

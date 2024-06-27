@@ -5,14 +5,14 @@
 
 @layer components {
     .hero-wrapper {
-        @apply  text-white  min-h-[calc(100vh-20px)] md:p-10 pt-40 mt-9 flex justify-between flex-col
+        @apply  min-h-[calc(100vh-20px)] md:p-10 pt-40 mt-9 flex justify-between flex-col
     }
     
 }
 
 .hero-wrapper {
-    background-image: url('../../assets/dispersed.svg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    /* background-color: white; */
 }

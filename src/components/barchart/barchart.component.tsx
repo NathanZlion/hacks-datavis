@@ -46,7 +46,7 @@ export const BarChart = ({ title, individual }: props) => {
         <div className="chart-wrapper">
             < Chart
                 graph_id="#detailedCharts"
-                className="barchart"
+                className="barchart dark:text-white"
                 chartType="BarChart"
                 width="100%"
                 data={[

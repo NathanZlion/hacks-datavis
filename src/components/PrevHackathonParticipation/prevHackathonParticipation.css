@@ -7,19 +7,14 @@
 
 @layer components {
     .prev-participation-wrapper {
-        @apply text-white min-h-[calc(100vh-150px)] h-fit p-2 md:p-10 md:px-40 flex justify-start flex-col w-full overflow-hidden gap-3 bg-sky-950
-        bg-gradient-to-b from-black from-10% via-slate-900 via-50% to-sky-950 to-[99%] 
-    }
+        @apply min-h-[calc(100vh-150px)] h-fit p-2 md:p-10 md:px-40 flex justify-start flex-col w-full overflow-hidden gap-3
+        }
 
     .title {
         @apply text-4xl
     }
     
     table {
-        @apply m-auto w-[80%]
+        @apply m-auto w-[80%] text-accent-foreground
     }
-}
-
-text {
-    @apply text-white
 }

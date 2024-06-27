@@ -85,21 +85,21 @@ export const Navbar = () => {
 
 
     return (
-        <nav className='h-20 py-4'>
+        <nav className='h-20 py-4 shadow-md bg-secondary'>
             <div className='d-flex justify-center content-center h-auto p-2 md:p-3'>
-                <img src={a2svLogo} alt="A2SV" className='object-contain hidden md:block'/>
-                <img src={a2svLogoSmall} alt="A2SV" className='object-contain md:hidden'/>
+                <img src={a2svLogo} alt="A2SV" className='object-contain hidden md:block' />
+                <img src={a2svLogoSmall} alt="A2SV" className='object-contain md:hidden' />
             </div>
-            <button onClick={handleReload} className='w-8 h-8 my-auto'>
-                {(grandstate === grandStateEnum.Initial || grandstate === grandStateEnum.Loaded || grandstate === grandStateEnum.Error) && <IoReloadOutline />}
-                {grandstate === grandStateEnum.Loading && 
-                <ColorRing
-                    visible={true} 
-                        height="100%" width="100%" ariaLabel="color-ring-loading" wrapperStyle={{}}
-                        wrapperClass="color-ring-wrapper"
-                        colors={['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#cce7ff']}
-                />}
-            </button>
+            <div className='flex flex-row gap-16'>
+                <button onClick={handleReload} className='w-8 h-8 my-auto flex hover:cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent'>
+                    <ProgressCircle
+                        className={grandstate === grandStateEnum.Loading ? 'animate-spin w-fit text-primary' : 'text-primary bg-accent'}
+                        tooltip="Refresh"
+                        value={72}
+                        radius={16} />
+                </button>
+                <ModeToggle />
+            </div>
         </nav>
     );
 };
