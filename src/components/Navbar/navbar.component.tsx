@@ -12,10 +12,13 @@ import { updatePrevParticipationData } from '../../state/prevParticipation.slice
 import { ModeToggle } from '../ui/modetoggle';
 import { useToast } from '../ui/use-toast';
 import { ProgressCircle } from '@tremor/react';
+import { updateLastSyncTimeJustNow } from '@/state/lastSync.slice';
+// import { lastSyncTime } from '@/state/lastSync.slice';
 
 export const Navbar = () => {
     const dispatch = useDispatch();
     const grandstate: string = useSelector((state: any) => state.grandState.value);
+    const lastSyncTime = useSelector((state: any) => state.lastSynced.value)
     const { toast } = useToast()
 
 
@@ -41,6 +44,7 @@ export const Navbar = () => {
             dispatch(updatePrevParticipationData(prevParticipation.value));
 
             dispatch(loadComplete());
+            dispatch(updateLastSyncTimeJustNow());
 
             toast({
                 title: "Refreshed Success",
@@ -80,12 +84,20 @@ export const Navbar = () => {
 
 
     return (
-        <nav className='h-20 py-4 shadow-md bg-secondary'>
+        <nav className='h-20 py-4 shadow-md bg-secondary flex align-center'>
             <div className='d-flex justify-center content-center h-auto p-2 md:p-3'>
                 <img src={a2svLogo} alt="A2SV" className='object-contain hidden md:block' />
                 <img src={a2svLogoSmall} alt="A2SV" className='object-contain md:hidden' />
             </div>
-            <div className='flex flex-row gap-16'>
+            <div className='flex flex-row gap-16 align-center justify-center'>
+                {
+                    lastSyncTime.successOnce &&
+                    <div className='text text-sm text-secondary-foreground hidden lg:block'>
+                            Last Synced {new Date(lastSyncTime.payload).toLocaleTimeString()}
+                    </div>
+                }
+
+                {/* {lastSyncTime.successOnce} */}
                 <button onClick={handleReload} className='w-8 h-8 my-auto flex hover:cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent'>
                     <ProgressCircle
                         className={grandstate === grandStateEnum.Loading ? 'animate-spin w-fit text-primary' : 'text-primary bg-accent'}
