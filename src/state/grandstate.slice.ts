@@ -28,6 +28,9 @@ export const grandSlice = createSlice({
         startLoading: state => {
             state.value = grandStateEnum.Loading;
         },
+        resetLoading: state => {
+            state.value = grandStateEnum.Initial;
+        },
         loadComplete: state => {
             state.value = grandStateEnum.Loaded;
         },
@@ -38,7 +41,7 @@ export const grandSlice = createSlice({
 });
 
 
-export const { startLoading, loadComplete, loadFailed } = grandSlice.actions;
+export const { startLoading, loadComplete, loadFailed, resetLoading } = grandSlice.actions;
 
 
 export default grandSlice.reducer;
