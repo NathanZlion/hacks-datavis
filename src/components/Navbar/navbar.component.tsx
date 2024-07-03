@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-import './navbar.css'
 import { grandStateEnum, loadComplete, loadFailed, resetLoading, startLoading } from '../../state/grandstate.slice'
 import { updateHeardFromData } from '../../state/heard-from.slice';
 import { summaryDataInterface, updateParticipantsInfo } from '../../state/summary.slice';
@@ -91,12 +90,12 @@ export const Navbar = () => {
 
 
     return (
-        <nav className='h-20 py-4 shadow-md bg-secondary flex align-center'>
+        <nav className='h-20 py-4 shadow-md bg-secondary  w-full text-3xl fixed mb-10 flex flex-row align-center justify-between z-50 p-5 '>
             <div className='d-flex justify-center content-center h-auto p-2 md:p-3'>
                 {/* Visible for Desktop */}
-                <img src={a2svLogo} alt="A2SV" className='object-contain hidden md:block' />
+                <img src={a2svLogo} alt="A2SV" className='hidden md:block object-cover w-full h-full' />
                 {/* Visible for Mobile */}
-                <img src={a2svLogoSmall} alt="A2SV" className='object-contain md:hidden' />
+                <img src={a2svLogoSmall} alt="A2SV" className='md:hidden object-cover w-full h-full' />
             </div>
             <div className='flex flex-row gap-4 md:gap-16 align-middle p-2 justify-center'>
                 {

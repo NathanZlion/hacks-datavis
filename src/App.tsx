@@ -1,4 +1,3 @@
-import './App.css'
 import { Hero } from './components/Hero/hero.component'
 import { Countries } from './components/Countries/countries.component'
 import { HeardAboutUs } from './components/Hear-About-Us/hear.component'
@@ -21,7 +20,7 @@ function App() {
       {/* {children} */}
       <div className='relative bg-background text-primary'>
         <Navbar />
-        <div className='body-wrapper'>
+        <div className='flex flex-col gap-0'>
           <Hero />
           <Countries />
           <HeardAboutUs />

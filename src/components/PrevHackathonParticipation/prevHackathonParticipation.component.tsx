@@ -1,17 +1,16 @@
 import { useSelector } from "react-redux";
 import { prevParticipationDataInterface } from "../../state/prevParticipation.slice";
-import "./prevHackathonParticipation.css";
 
 
 export const PrevHackathonPartcipation = () => {
     const prevParticipationData: prevParticipationDataInterface = useSelector((state: any) => state.prevParticipation.value.payload);
 
     return (
-        <div className="prev-participation-wrapper">
-            <div className="title">
+        <div className="min-h-[calc(100vh-150px)] h-fit p-2 md:p-10 md:px-40 flex justify-start flex-col w-full overflow-hidden gap-3 ">
+            <div className="text-4xl">
                 Have you participated in A2SV or Other Hackathons?
             </div>
-            <table >
+            <table className="m-auto w-[80%] text-accent-foreground">
                 <tbody>
                     <tr>
                         <th rowSpan={2}> Individual  </th>
