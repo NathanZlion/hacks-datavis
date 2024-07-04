@@ -21,6 +21,9 @@ export const Navbar = () => {
 
 
     const handleReload = async (userTrigerred: boolean = false) => {
+        // avoid multiple reloads
+        if (grandstate === grandStateEnum.Loading) return;
+
         try {
             dispatch(startLoading()); // Dispatch a pending action
 
