@@ -2,15 +2,16 @@ import axios from "axios";
 
 export class CachedNetworkRequest {
     private static cacheKeyPrefix = 'axiosCache_';
+    private static cacheDurationInSeconds = 15;
 
-    static async get(url: string, cacheDurationMinutes = 1) {
+    static async get(url: string, cacheDurationInSeconds = CachedNetworkRequest.cacheDurationInSeconds) {
         const cacheKey = this.cacheKeyPrefix + url;
         const cachedData = localStorage.getItem(cacheKey);
         const currentTime = new Date().getTime();
 
         if (cachedData) {
             const { data, timestamp } = JSON.parse(cachedData);
-            if (currentTime - timestamp < cacheDurationMinutes * 60 * 1000) {
+            if (currentTime - timestamp < cacheDurationInSeconds * 1000) {
                 // Use cached data
                 return data;
             }
