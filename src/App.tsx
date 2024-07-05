@@ -6,8 +6,6 @@ import { Footer } from './components/Footer/footer.component'
 import { PrevHackathonPartcipation } from './components/PrevHackathonParticipation/prevHackathonParticipation.component'
 import { Toaster } from '@/components/ui/toaster'
 import { ThemeProvider } from "@/services/themeProvider";
-// @ts-ignore This is an analytics package and it's
-// usage is just to import it
 import { Analytics } from "@vercel/analytics/react"
 
 function App() {
@@ -15,11 +13,12 @@ function App() {
 
   return (
     <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
+    attribute="class"
+    defaultTheme="system"
+    enableSystem
+    disableTransitionOnChange
     >
+      <Analytics />
       {/* {children} */}
       <div className='relative bg-background text-primary'>
         <Navbar />
