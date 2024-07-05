@@ -88,11 +88,8 @@ td {
 
 
 /* Google Charts */
-.google-visualization-tooltip text {
-    fill: hsl(var(--accent-foreground)) !important;
-}
-
-.countries-wrapper text, .hear-wrapper text {
+.google-visualization-tooltip text,  
+.countries-wrapper text, .hear-wrapper text, text {
     fill: hsl(var(--accent-foreground)) !important;
 }
 
