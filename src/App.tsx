@@ -15,11 +15,12 @@ function App() {
 
   return (
     <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
+    attribute="class"
+    defaultTheme="system"
+    enableSystem
+    disableTransitionOnChange
     >
+      <Analytics />
       {/* {children} */}
       <div className='relative bg-background text-primary'>
         <Navbar />
