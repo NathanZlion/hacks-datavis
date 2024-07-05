@@ -13,7 +13,7 @@ export const HeardAboutUs = () => {
     const data: String[][] = useSelector((state: any) => state.heardFrom.value.payload);
 
     return (
-        <div className="min-h-[calc(100vh-150px)] h-fit p-2 md:p-10 md:px-40 flex justify-start flex-col w-full overflow-hidden gap-3 ">
+        <div className="md:min-h-[calc(100vh-150px)] h-fit p-2 md:p-10 md:px-40 flex justify-start flex-col w-full overflow-hidden gap-3 ">
             <div className="text-4xl">
                 Where did you hear about us?
             </div>
