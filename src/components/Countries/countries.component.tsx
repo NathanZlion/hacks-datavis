@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { countryData } from '../../state/countries.slice';
 import { Badge, BarList } from '@tremor/react';
 import countryNameToCodeMapping from '@/lib/countryNameToCodeMapping.json';
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import {
   Card,
   CardContent,
@@ -17,7 +18,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import { ArrowBigRight, Info } from 'lucide-react';
+import { ArrowBigRight, Info, WandSparkles } from 'lucide-react';
 import Chart from 'react-google-charts';
 
 
@@ -67,7 +68,7 @@ export const Countries = () => {
   const mapdata = [
     ["Country", "Participants"],
     ...Object.entries(countryNameToCodeMapping).map(([key, _]) => ([key, 0])),
-    
+
     // @ts-ignore
     ...Object.entries(countriesData).map(([key, value]) => ([key, (value.numberOfGroupParticipants * 4) + value.numberOfIndividualParticipants])),
   ]
@@ -97,9 +98,7 @@ export const Countries = () => {
 
   return (
     <div className='grid grid-cols-1 lg:grid-cols-2  px-3 md:px-20'>
-      <div
-        className="p-2 pt-5 md:pt-10 overflow-hidden h-[calc(100vh-120px)] flex flex-col justify-start m-0"
-        id='country_distribution' >
+      <div className="p-2 pt-5 md:pt-10 overflow-hidden h-[calc(100vh-120px)] flex flex-col justify-start m-0" >
         <div className="text-4xl mb-5 flex-shrink text-center md:text-start">
           Distribution By Country
         </div>
@@ -148,7 +147,40 @@ export const Countries = () => {
             </Card>
           </TabsContent>
         </Tabs>
+
+        <div className=''>
+          <div className='text-center md:text-start'>
+            <WandSparkles className='inline' />
+            <span className="text-2xl mb-5 flex-shrink"> Countries that are not represented </span>
+            <ArrowBigRight className='inline' />
+            <span className='text-2xl'> {countriesThatAreNotRepresentedInEitherGroupOrIndividual.length} </span>
+          </div>
+
+          {/* scrollable list of countries */}
+          <ScrollArea className=' pb-3  whitespace-nowrap'>
+            {
+              Object.entries(countriesThatAreNotRepresentedInEitherGroupOrIndividual).map(([
+                _, [countryName]
+              ]) => (
+                <Badge icon={undefined} className='w-fit p-1 rounded-3xl mx-2'>
+                  <div className='overflow-hidden h-6  my-auto mr-2 hover:animate-pulse flex align-middle justify-center gap-2'>
+                    <img
+                      src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[countryName.toLowerCase()]}.svg`}
+                      className='object-fill h-6 w-14 inline rounded-full'
+                      alt={countryName} />
+
+                    <span className='inline text-tremor-default text-dark-tremor-content dark:text-tremor-brand-inverted'>
+                      {countryName.split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                    </span>
+                  </div>
+                </Badge>
+              ))
+            }
+            <ScrollBar orientation="horizontal" asChild={true} className='border border-black bg-dark-tremor-brand-faint'/>
+          </ScrollArea>
+        </div>
       </div>
+
       <div className='m-0 flex justify-center align-middle overflow-hidden shadow-sm shadow-slate-200 flex-col'>
         <div className="my-auto">
           <Chart
@@ -159,37 +191,6 @@ export const Countries = () => {
             data={mapdata}
             options={mapoptions}
           />
-        </div>
-
-        <div className='mx-2 lg:mx-10'>
-
-          <div className='text-center md:text-start'>
-            <Info className='inline' />
-            <span className="text-2xl mb-5 flex-shrink"> Countries that are not represented </span>
-            <ArrowBigRight className='inline'/>
-            <span className='text-xl'> {countriesThatAreNotRepresentedInEitherGroupOrIndividual.length} </span>
-          </div>
-
-          <div className='flex flex-row flex-wrap pb-3 gap-2'>
-            {
-              Object.entries(countriesThatAreNotRepresentedInEitherGroupOrIndividual).map(([
-                _, [countryName]
-              ]) => (
-                <Badge icon={undefined} className='w-fit p-1 rounded-3xl'>
-                  <div className='overflow-hidden h-6  my-auto mr-2 hover:animate-pulse flex align-middle justify-center gap-4'>
-                    <img
-                      src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[countryName.toLowerCase()]}.svg`}
-                      className='object-cover hover:object-scale-down h-6 w-14 inline rounded-full'
-                      alt={countryName} />
-
-                    <span className='inline text-tremor-default text-dark-tremor-content dark:text-tremor-brand-inverted'>
-                      {countryName.split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                    </span>
-                  </div>
-                </Badge>
-              ))
-            }
-          </div>
         </div>
 
       </div>
