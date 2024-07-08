@@ -23,7 +23,7 @@ export const PrevHackathonPartcipation = () => {
 
 
     return (
-        <div className="md:min-h-[calc(100vh-150px)] h-fit p-2 md:p-10 md:px-40 flex justify-start flex-col w-full overflow-hidden gap-3 ">
+        <div className="lg:min-h-[calc(100vh-150px)] h-fit p-2 md:p-10 md:px-40 flex justify-start flex-col w-full overflow-hidden gap-3 ">
             <div className="text-4xl">
                 Have you participated in A2SV or Other Hackathons?
             </div>

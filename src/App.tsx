@@ -25,7 +25,7 @@ function App() {
         <div className='flex flex-col gap-0'>
           <Hero />
           <Countries />
-          <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col lg:flex-row">
           <HeardAboutUs />
           <PrevHackathonPartcipation />
           </div>
