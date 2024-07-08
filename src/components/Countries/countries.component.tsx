@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { countryData } from '../../state/countries.slice';
-import { BarList } from '@tremor/react';
+import { Badge, BarList } from '@tremor/react';
 import countryNameToCodeMapping from '@/lib/countryNameToCodeMapping.json';
 import {
   Card,
@@ -17,9 +17,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import { Info } from 'lucide-react';
+import { ArrowBigRight, Info } from 'lucide-react';
 import Chart from 'react-google-charts';
-
 
 
 interface CountryNameToCodeMapping {
@@ -67,13 +66,15 @@ export const Countries = () => {
 
   const mapdata = [
     ["Country", "Participants"],
+    ...Object.entries(countryNameToCodeMapping).map(([key, _]) => ([key, 0])),
+    
     // @ts-ignore
     ...Object.entries(countriesData).map(([key, value]) => ([key, (value.numberOfGroupParticipants * 4) + value.numberOfIndividualParticipants])),
   ]
 
   const mapoptions = {
     region: "002", // Africa
-    colorAxis: { colors: ["#ededed", "#d0d9ff", "#7e6efa"] },
+    colorAxis: { colors: ["#ffffff", "#8575FA", "#503AF8"] },
     backgroundColor: "transparent",
     datalessRegionColor: "#ffffff",
     defaultColor: "#ffffff",
@@ -81,11 +82,23 @@ export const Countries = () => {
     legend: "none",
   };
 
+  // make the country names lowercase in the hashmap
+  const countriesDataLowercase = Object.fromEntries(
+    Object.entries(countriesData).map(([key, value]) => [key.toLowerCase(), value])
+  );
+
+  // for countries in countryNameToCodeMapping if the country is not in the countriesData or both numberOfIndividualParticipants and numberOfGroupParticipants are 0
+  const countriesThatAreNotRepresentedInEitherGroupOrIndividual = Object.entries(
+    Object.fromEntries(Object.entries(countryNameToCodeMapping).sort((a, b) => a[0].localeCompare(b[0]))!)
+  ).filter(([countryName, _]) => {
+    return !countriesDataLowercase[countryName] || (countriesDataLowercase[countryName].numberOfIndividualParticipants === 0 && countriesDataLowercase[countryName].numberOfGroupParticipants === 0)
+  });
+
 
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2'>
+    <div className='grid grid-cols-1 lg:grid-cols-2  px-3 md:px-20'>
       <div
-        className="p-2 pt-5 md:pt-10 px-3 md:px-20 overflow-hidden h-[calc(100vh-120px)] flex flex-col justify-start m-0"
+        className="p-2 pt-5 md:pt-10 overflow-hidden h-[calc(100vh-120px)] flex flex-col justify-start m-0"
         id='country_distribution' >
         <div className="text-4xl mb-5 flex-shrink text-center md:text-start">
           Distribution By Country
@@ -136,7 +149,7 @@ export const Countries = () => {
           </TabsContent>
         </Tabs>
       </div>
-      <div className='m-0 flex justify-center align-middle overflow-hidden shadow-sm shadow-slate-200'>
+      <div className='m-0 flex justify-center align-middle overflow-hidden shadow-sm shadow-slate-200 flex-col'>
         <div className="my-auto">
           <Chart
             chartType="GeoChart"
@@ -147,6 +160,38 @@ export const Countries = () => {
             options={mapoptions}
           />
         </div>
+
+        <div className='mx-2 lg:mx-10'>
+
+          <div className='text-center md:text-start'>
+            <Info className='inline' />
+            <span className="text-2xl mb-5 flex-shrink"> Countries that are not represented </span>
+            <ArrowBigRight className='inline'/>
+            <span className='text-xl'> {countriesThatAreNotRepresentedInEitherGroupOrIndividual.length} </span>
+          </div>
+
+          <div className='flex flex-row flex-wrap pb-3 gap-2'>
+            {
+              Object.entries(countriesThatAreNotRepresentedInEitherGroupOrIndividual).map(([
+                _, [countryName]
+              ]) => (
+                <Badge icon={undefined} className='w-fit p-1 rounded-3xl'>
+                  <div className='overflow-hidden h-6  my-auto mr-2 hover:animate-pulse flex align-middle justify-center gap-4'>
+                    <img
+                      src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[countryName.toLowerCase()]}.svg`}
+                      className='object-cover hover:object-scale-down h-6 w-14 inline rounded-full'
+                      alt={countryName} />
+
+                    <span className='inline text-tremor-default text-dark-tremor-content dark:text-tremor-brand-inverted'>
+                      {countryName.split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                    </span>
+                  </div>
+                </Badge>
+              ))
+            }
+          </div>
+        </div>
+
       </div>
     </div>
   );
