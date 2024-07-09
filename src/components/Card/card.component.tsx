@@ -24,20 +24,20 @@ export default function CountCard({ cardTitle, cardIcon = faEarthAfrica, cardVal
   const grandstate: string = useSelector((state: any) => state.grandState.value);
 
   return (
-    <Card className={_className || ""}>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+    <Card className={_className + ""}>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
         <CardTitle className="text-sm font-medium">{cardTitle}</CardTitle>
         <FontAwesomeIcon icon={cardIcon} className="h-8 w-8 text-muted-foreground" />
       </CardHeader>
       <CardContent>
         {
           !(grandstate === grandStateEnum.Loaded) &&
-          <div className="bg-slate-700 h-12 w-24 rounded animate-pulse"></div>
+          <div className="bg-slate-700 h-10 w-24 rounded animate-pulse"></div>
         }
 
         {
           (grandstate === grandStateEnum.Loaded) &&
-          <div className="text-5xl font-bold text-start">{cardValue}</div>
+          <div className="text-4xl md:text-5xl font-bold text-start">{cardValue}</div>
         }
 
         <p className="text-xs text-muted-foreground">{cardMutedValue}</p>

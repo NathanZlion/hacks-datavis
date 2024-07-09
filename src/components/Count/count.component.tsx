@@ -14,7 +14,7 @@ export const Count = () => {
                 Summary Stat
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-start md:justify-center gap-3 text-center md:w-4/5 mx-auto m-auto w-4/5 px-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-start md:justify-center gap-3 text-center  mx-auto m-auto w-full px-auto">
                 {/* Total participation */}
                 <CountCard cardTitle={"Total Registration"} cardValue={people ? people.totalParticipants : 0} cardIcon={faClipboardUser} />
 
