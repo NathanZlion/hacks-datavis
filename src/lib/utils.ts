@@ -6,3 +6,14 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export type Result<T> = { success: true, value: T } | { success: false, error: Error };
+
+export enum LoadingState {
+  LoadingInitial = 'loadingInitial',
+  Loading = 'loading',
+  LoadingSuccess = 'loadedSuccess',
+  LoadingError = 'loadingError'
+}
+
+export function cx(...args: ClassValue[]) {
+  return twMerge(clsx(...args))
+}
