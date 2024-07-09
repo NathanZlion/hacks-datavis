@@ -27,22 +27,25 @@ export const Navbar = () => {
         try {
             dispatch(startLoading()); // Dispatch a pending action
 
-            const countryData = await ApiService.getCountryData();
-            if (!countryData.success) throw countryData.error;
-            dispatch(updateCountries(countryData.value));
+            const countryResponse = await ApiService.getCountryData();
+            if (!countryResponse.success) throw countryResponse.error;
+            dispatch(updateCountries(countryResponse.value));
 
-            const heardFromData = await ApiService.getHeardFrom();
-            if (!heardFromData.success) throw heardFromData.error;
-            dispatch(updateHeardFromData(heardFromData.value as [string, number][] & void));
+            const heardFromResponse = await ApiService.getHeardFrom();
+            if (!heardFromResponse.success) throw heardFromResponse.error;
+            dispatch(updateHeardFromData(heardFromResponse.value as [string, number][] & void));
 
-            const summaryData = await ApiService.getSummaryData();
-            if (!summaryData.success) throw summaryData.error;
-            dispatch(updateParticipantsInfo(summaryData.value as summaryDataInterface));
+            const summaryResponse = await ApiService.getSummaryData();
+            if (!summaryResponse.success) throw summaryResponse.error;
+            dispatch(updateParticipantsInfo(summaryResponse.value as summaryDataInterface));
 
 
-            const prevParticipation = await ApiService.getPreviousHackathonParticipation();
-            if (!prevParticipation.success) throw prevParticipation.error;
-            dispatch(updatePrevParticipationData(prevParticipation.value));
+            const prevParticipationResponse = await ApiService.getPreviousHackathonParticipation();
+            if (!prevParticipationResponse.success) throw prevParticipationResponse.error;
+            dispatch(updatePrevParticipationData(prevParticipationResponse.value));
+
+            const timeseriesDataResponse = await ApiService.getTimeseriesData();
+            if (!timeseriesDataResponse.success) throw timeseriesDataResponse.error;
 
             dispatch(loadComplete());
             dispatch(updateLastSyncTimeJustNow());

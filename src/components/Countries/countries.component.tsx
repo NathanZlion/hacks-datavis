@@ -162,7 +162,7 @@ export const Countries = () => {
               Object.entries(countriesThatAreNotRepresentedInEitherGroupOrIndividual).map(([
                 _, [countryName]
               ]) => (
-                <Badge icon={undefined} className='w-fit p-1 rounded-3xl mx-2'>
+                <Badge key={countryName} icon={undefined} className='w-fit p-1 rounded-3xl mx-2'>
                   <div className='overflow-hidden h-6  my-auto mr-2 hover:animate-pulse flex align-middle justify-center gap-2'>
                     <img
                       src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[countryName.toLowerCase()]}.svg`}
