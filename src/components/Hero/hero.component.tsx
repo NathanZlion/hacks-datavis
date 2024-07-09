@@ -49,7 +49,7 @@ export const Hero = () => {
 
                 {
                     timeseriesData.loadingState === LoadingState.Loading && (
-                        <div className="flex justify-center items-center h-48 w-full relative bg-tremor-content-inverted rounded-lg overflow-hidden">
+                        <div className="flex justify-center items-center md:h-80 w-full relative bg-tremor-content-inverted dark:bg-dark-tremor-brand-faint rounded-lg overflow-hidden">
                             <ProgressCircle
                                 className="text-primary"
                                 value={72}
