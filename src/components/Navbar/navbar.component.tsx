@@ -12,6 +12,7 @@ import { ModeToggle } from '../ui/modetoggle';
 import { useToast } from '../ui/use-toast';
 import { ProgressCircle } from '@tremor/react';
 import { updateLastSyncTimeJustNow } from '@/state/lastSync.slice';
+import { updateFullTimeseriesData } from '@/state/timeseries.slice';
 
 export const Navbar = () => {
     const dispatch = useDispatch();
@@ -46,6 +47,8 @@ export const Navbar = () => {
 
             const timeseriesDataResponse = await ApiService.getTimeseriesData();
             if (!timeseriesDataResponse.success) throw timeseriesDataResponse.error;
+            // @ts-ignore
+            dispatch(updateFullTimeseriesData());
 
             dispatch(loadComplete());
             dispatch(updateLastSyncTimeJustNow());

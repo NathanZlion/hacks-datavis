@@ -8,7 +8,7 @@ import * as React from "react"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon, CalendarXIcon } from "lucide-react"
 
-import { cn, cx } from "@/lib/utils"
+import { cn, cx, LoadingState } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -19,7 +19,7 @@ import {
 import { changeRangeForTimeseriesData, resetTimeSeriesRange, SingleDayDataInterface, TimeseriesDataInterface, updateFullTimeseriesData, updateTimeseriesDataInRange } from '@/state/timeseries.slice';
 import { useEffect } from 'react';
 import { RootState } from '@/store';
-import { group } from 'console';
+import { ProgressCircle } from '@tremor/react';
 
 
 export const Hero = () => {
@@ -31,6 +31,10 @@ export const Hero = () => {
         dispatch(updateFullTimeseriesData());
     }, [dispatch]);
 
+    const handleRefresh = () => {
+        // @ts-ignore
+        dispatch(updateFullTimeseriesData());
+    }
 
     return (
         <div className='min-h-[calc(100vh-20px)] md:p-10 pt-24 md:pt-28 flex justify-between flex-col'>
@@ -39,22 +43,40 @@ export const Hero = () => {
                 <div className="flex flex-wrap justify-start gap-2 m-5">
                     <DatePickerWithRange />
                     <ClearDateRangeButton />
+                    <Button onClick={handleRefresh}>Refresh</Button>
+
                 </div>
 
-                <LineChart
-                    className="w-max-[100%]"
-                    data={formatDateInTimeseriesData(timeseriesData.value.dataInRange)}
-                    index="date"
-                    categories={["individual", "group", "total"]}
-                    valueFormatter={(number: number) =>
-                        `${Intl.NumberFormat("us").format(number).toString()}`
-                    }
-                    onValueChange={(v) => 
-                        console.log(v)
-                    }
-                    showLegend={false}
-                    customTooltip={Tooltip}
-                />
+                {
+                    timeseriesData.loadingState === LoadingState.Loading && (
+                        <div className="flex justify-center items-center h-48 w-full relative bg-tremor-content-inverted rounded-lg overflow-hidden">
+                            <ProgressCircle
+                                className="text-primary"
+                                value={72}
+                                radius={50}
+                            />
+                        </div>
+                    
+                    )
+                }
+                {
+                    timeseriesData.loadingState === LoadingState.LoadingSuccess &&
+
+                    <LineChart
+                        className="w-max-[100%]"
+                        data={formatDateInTimeseriesData(timeseriesData.value.dataInRange)}
+                        index="date"
+                        categories={["individual", "group", "total"]}
+                        valueFormatter={(number: number) =>
+                            `${Intl.NumberFormat("us").format(number).toString()}`
+                        }
+                        onValueChange={(v) =>
+                            console.log(v)
+                        }
+                        showLegend={false}
+                        customTooltip={Tooltip}
+                    />
+                }
             </div>
             
 
