@@ -49,10 +49,6 @@ export const timeseriesSlice = createSlice({
             ];
         },
 
-        // update the whole timeseries data, both fullData and dataInRange
-        hardResetTimeseriesData: () => {
-        },
-
         setFullData: (state, action: PayloadAction<SingleDayDataInterface[]>) => {
             state.value.fullData = action.payload;
         },
