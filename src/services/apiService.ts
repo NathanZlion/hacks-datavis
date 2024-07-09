@@ -4,6 +4,7 @@ import { countryData } from "../state/countries.slice";
 import { prevParticipationDataInterface } from "../state/prevParticipation.slice";
 import { Result } from "@/lib/utils";
 import { CachedNetworkRequest } from "./requestCacheMiddleware";
+import { SingleDayDataInterface } from "@/state/timeseries.slice";
 
 // define a type for the response data
 interface ReachoutResponce {
@@ -97,6 +98,23 @@ export class ApiService {
       }
     } catch (error) {
       return { success: false, error: Error("Failed to load summary Data") };
+    }
+  }
+
+  static getTimeseriesData = async (startDate: string | null = null, endDate: string | null = null): Promise<Result<SingleDayDataInterface[] | void>> => {
+    try {
+      // Since the data is long for the time series Data. It's better to make the cache duration longer.
+      const minimumDurationInSeconds = 0; // 2 minutes
+      let response = await CachedNetworkRequest.get(`${BASE_URL}/timeseries?startDate=${startDate}&endDate=${endDate}`, minimumDurationInSeconds);
+
+      if (response.message !== "success") {
+        return { success: false, error: Error("Failed to load time series data") };
+      } else {
+        return { success: true, value: response.data };
+      }
+      
+    } catch (error) {
+        return { success: false, error: Error("Failed to load time series data") };
     }
   }
 }

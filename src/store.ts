@@ -5,15 +5,20 @@ import heardFromReducer from './state/heard-from.slice';
 import grandReducer from './state/grandstate.slice';
 import prevParticipationReducer from './state/prevParticipation.slice';
 import lastRefreshedReducer from './state/lastSync.slice';
+import timeseriesReducer from './state/timeseries.slice';
 
-export default configureStore({
+const store = configureStore({
   reducer: {
     countries: countriesReducer,
     people: peopleReducer,
     heardFrom: heardFromReducer,
     grandState: grandReducer,
     prevParticipation: prevParticipationReducer,
+    timeseries: timeseriesReducer,
     lastSynced: lastRefreshedReducer,
   }
 })
 
+
+export type RootState = ReturnType<typeof store.getState>;
+export default store;
