@@ -149,7 +149,8 @@ const _patchDataInRange = (data: SingleDayDataInterface[], updatedDataInRange: S
 // because the data is sorted when it comes from the backend.
 const _dataInRange = (sortedData: SingleDayDataInterface[], [startDate, endDate]: [string | null, string | null]) : SingleDayDataInterface[]=> {
     return sortedData.filter(data => {
-        const date = new Date(data.date).toLocaleDateString();
+        const date = new Date(data.date
+        ).toLocaleDateString();
         return date >= startDate! && date <= endDate!;
     });
 
