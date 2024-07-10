@@ -4,19 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Count } from '../Count/count.component';
 import { HorizontalLine } from '../ui/divider';
 import { LineChart, TooltipProps } from '@/components/ui/linechart';
-import * as React from "react"
 import { format } from "date-fns"
-import { Calendar as CalendarIcon, CalendarXIcon } from "lucide-react"
-
-import { cn, cx, LoadingState } from "@/lib/utils"
+import { cx, LoadingState } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover"
-import { changeRangeForTimeseriesData, resetTimeSeriesRange, SingleDayDataInterface, TimeseriesDataInterface, updateFullTimeseriesData, updateTimeseriesDataInRange } from '@/state/timeseries.slice';
+import { SingleDayDataInterface, TimeseriesDataInterface, updateFullTimeseriesData } from '@/state/timeseries.slice';
 import { useEffect } from 'react';
 import { RootState } from '@/store';
 import { ProgressCircle } from '@tremor/react';
@@ -41,47 +32,28 @@ export const Hero = () => {
             <div className="px-5">
                 <Count />
                 <div className="flex flex-wrap justify-start gap-2 m-5">
-                    <DatePickerWithRange />
-                    <ClearDateRangeButton />
                     <Button onClick={handleRefresh}>Refresh</Button>
-
                 </div>
 
                 {
-                    timeseriesData.loadingState === LoadingState.Loading && (
+                    timeseriesData.loadingState === LoadingState.Loading ? (
                         <div className="flex justify-center items-center md:h-80 w-full relative bg-tremor-content-inverted dark:bg-dark-tremor-brand-faint rounded-lg overflow-hidden">
-                            <ProgressCircle
-                                className="text-primary"
-                                value={72}
-                                radius={50}
-                            />
+                            <ProgressCircle className="text-primary" value={72} radius={50} />
                         </div>
-                    
-                    )
-                }
-                {
-                    timeseriesData.loadingState === LoadingState.LoadingSuccess &&
-
-                    <LineChart
-                        className="w-max-[100%]"
-                        data={formatDateInTimeseriesData(timeseriesData.value.dataInRange)}
-                        index="date"
-                        categories={["individual", "group", "total"]}
-                        valueFormatter={(number: number) =>
-                            `${Intl.NumberFormat("us").format(number).toString()}`
-                        }
-                        onValueChange={(v) =>
-                            console.log(v)
-                        }
-                        showLegend={false}
-                        customTooltip={Tooltip}
-                    />
+                    ) :
+                        <LineChart
+                            className="w-max-[100%]"
+                            data={formatDateInTimeseriesData(timeseriesData.value.fullData)}
+                            index="date"
+                            categories={["individual", "group", "total"]}
+                            valueFormatter={(number: number) => `${Intl.NumberFormat("us").format(number).toString()}`}
+                            onValueChange={(v) => console.log(v)}
+                            showLegend={false}
+                            customTooltip={Tooltip}
+                        />
                 }
             </div>
-            
-
             <HorizontalLine />
-
         </div>
     );
 }
@@ -96,71 +68,6 @@ const formatDateInTimeseriesData = (data: SingleDayDataInterface[]) => {
     }));
 
 }
-
-const DatePickerWithRange = ({ className, }: React.HTMLAttributes<HTMLDivElement>) => {
-    const { value: {  range: [from, to] } }: TimeseriesDataInterface = useSelector((state: any) => state.timeseries);
-    const dispatch = useDispatch();
-
-    return (
-        <div className={cn("grid gap-2", className)}>
-            <Popover>
-                <PopoverTrigger asChild>
-                    <Button id="date" variant={"outline"} className={cn("w-[300px] justify-start text-left font-normal", (!from || !to) && "text-muted-foreground")} >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {from ? (
-                            to ? (
-                                <> {format(from, "LLL dd, y")} -{" "} {format(to, "LLL dd, y")} </>
-                            ) : (format(from, "LLL dd, y"))
-                        ) : (<span>Pick a date</span>)}
-                    </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                        initialFocus
-                        mode="range"
-                        defaultMonth={new Date(from!)}
-                        selected={
-                            (to && from && new Date(from) <= new Date(to)) ?
-                            { from: new Date(from!), to: new Date(to!) } :
-                            { from: new Date(), to: new Date() }
-                        }
-                        onSelect={
-                            (newDate) => {
-                                const from = newDate ? newDate.from! : null;
-                                const to = newDate ? newDate.to! : null;
-                                dispatch(changeRangeForTimeseriesData([from?.toLocaleDateString()!, to?.toLocaleDateString()!]));
-                                // @ts-ignore
-                                dispatch(updateTimeseriesDataInRange());
-                            }
-                        }
-                        numberOfMonths={2}
-                    />
-                </PopoverContent>
-            </Popover>
-        </div>
-    )
-}
-
-
-const ClearDateRangeButton = ({ className, }: React.HTMLAttributes<HTMLButtonElement>) => {
-    const dispatch = useDispatch();
-
-    return (
-        <Button
-            className={cn("flex gap-3", className)}
-            onClick={() => {
-                dispatch(resetTimeSeriesRange());
-                // @ts-ignore
-                dispatch(updateTimeseriesDataInRange());
-            }}
-        >
-            <CalendarXIcon />
-            <span>Clear date range</span>
-        </Button>
-    );
-}
-
-
 
 const Tooltip = ({ payload, active, label }: TooltipProps) => {
     if (!active || !payload || payload.length === 0) return null;
