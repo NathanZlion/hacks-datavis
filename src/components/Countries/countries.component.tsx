@@ -29,41 +29,89 @@ interface CountryNameToCodeMapping {
 export const Countries = () => {
   const countriesData: countryData = useSelector((state: any) => state.countries.value.payload);
 
-  const _individualData = [
-    // @ts-ignore
-    ...Object.entries(countriesData).map(([key, value]) => ({
-      name: key,
-      value: value.numberOfIndividualParticipants,
-      icon: function icon() {
-        return (
-          <div className='overflow-hidden w-6 h-6 rounded-full my-auto mr-2 hover:animate-pulse'>
-            <img
-              src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[key.toLowerCase()]}.svg`}
-              className='object-contain hover:object-scale-down w-full h-full '
-              alt={key} />
-          </div>
-        );
-      },
-    }))
-  ]
+  const _individualData = Object.values({
+    // First, create an object with all countries set to value 0
+    ...Object.entries(countryNameToCodeMapping).reduce((acc, [key]) => {
+      acc[key.toLowerCase()] = {
+        name: key,
+        value: 0,
+        icon: function icon() {
+          return (
+            <div className='overflow-hidden w-6 h-6 rounded-full my-auto mr-2 hover:animate-pulse'>
+              <img
+                src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[key.toLowerCase()]}.svg`}
+                className='object-contain hover:object-scale-down w-full h-full'
+                alt={key}
+              />
+            </div>
+          );
+        },
+      };
+      return acc;
+    }, {} as { [key: string]: { name: string; value: number; icon: () => JSX.Element } }),
 
-  const _groupData = [
-    // @ts-ignore
-    ...Object.entries(countriesData).map(([key, value]) => ({
-      name: key,
-      value: value.numberOfGroupParticipants,
-      icon: function icon() {
-        return (
-          <div className='overflow-hidden w-6 h-6 rounded-full my-auto mr-2'>
-            <img
-              src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[key.toLowerCase()]}.svg`}
-              className='object-contain hover:object-scale-down w-full h-full'
-              alt={key} />
-          </div>
-        );
-      },
-    }))
-  ]
+    // Then, update the object with countries that have participants
+    ...Object.entries(countriesData).reduce((acc, [key, value]) => {
+      acc[key.toLowerCase()] = {
+        name: key,
+        value: value.numberOfIndividualParticipants,
+        icon: function icon() {
+          return (
+            <div className='overflow-hidden w-6 h-6 rounded-full my-auto mr-2 hover:animate-pulse'>
+              <img
+                src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[key.toLowerCase()]}.svg`}
+                className='object-contain hover:object-scale-down w-full h-full'
+                alt={key}
+              />
+            </div>
+          );
+        },
+      };
+      return acc;
+    }, {} as { [key: string]: { name: string; value: number; icon: () => JSX.Element } })
+  });
+
+  const _groupData = Object.values({
+    // First, create an object with all countries set to value 0
+    ...Object.entries(countryNameToCodeMapping).reduce((acc, [key]) => {
+      acc[key.toLowerCase()] = {
+        name: key,
+        value: 0,
+        icon: function icon() {
+          return (
+            <div className='overflow-hidden w-6 h-6 rounded-full my-auto mr-2'>
+              <img
+                src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[key.toLowerCase()]}.svg`}
+                className='object-contain hover:object-scale-down w-full h-full'
+                alt={key}
+              />
+            </div>
+          );
+        },
+      };
+      return acc;
+    }, {} as { [key: string]: { name: string; value: number; icon: () => JSX.Element } }),
+
+    // Then, update the object with countries that have participants
+    ...Object.entries(countriesData).reduce((acc, [key, value]) => {
+      acc[key.toLowerCase()] = {
+        name: key,
+        value: value.numberOfGroupParticipants,
+        icon: function icon() {
+          return (
+            <div className='overflow-hidden w-6 h-6 rounded-full my-auto mr-2'>
+              <img
+                src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[key.toLowerCase()]}.svg`}
+                className='object-contain hover:object-scale-down w-full h-full'
+                alt={key}
+              />
+            </div>
+          );
+        },
+      };
+      return acc;
+    }, {} as { [key: string]: { name: string; value: number; icon: () => JSX.Element } })
+  });
 
   const mapdata = [
     ["Country", "Participants"],
