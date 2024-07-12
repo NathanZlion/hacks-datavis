@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { grandStateEnum, loadComplete, loadFailed, resetLoading, startLoading } from '../../state/grandstate.slice'
 import { updateHeardFromData } from '../../state/heard-from.slice';
 import { summaryDataInterface, updateParticipantsInfo } from '../../state/summary.slice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ApiService } from '../../services/apiService';
 import { updateCountries } from '../../state/countries.slice';
 import a2svLogo from '../../assets/A2SV_LOGO.svg';
@@ -18,7 +18,23 @@ export const Navbar = () => {
     const dispatch = useDispatch();
     const grandstate: string = useSelector((state: any) => state.grandState.value);
     const lastSyncTime = useSelector((state: any) => state.lastSynced.value)
+    const [navbarOpen, setNavbarOpen] = useState(false);
     const { toast } = useToast()
+
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > lastScrollY + 1) {
+            lastScrollY = window.scrollY;
+            if (navbarOpen) {
+                setNavbarOpen(false);
+            }
+        } else {
+            setNavbarOpen(true);
+        }
+        lastScrollY = window.scrollY;
+    });
+
 
 
     const handleReload = async (userTrigerred: boolean = false) => {
@@ -99,18 +115,21 @@ export const Navbar = () => {
 
 
     return (
-        <nav className='h-20 py-4 shadow-md bg-secondary  w-full text-3xl fixed mb-10 flex flex-row align-center justify-between z-50 p-5 '>
-            <div className='d-flex justify-center content-center h-auto p-2 md:p-3'>
+        <nav
+            className='h-16 py-4 shadow-md bg-secondary  w-full text-3xl mb-10 flex flex-row align-center justify-between z-50 p-5 fixed top-0 left-0 transition-all duration-200'
+            style={{ transform: navbarOpen ? 'translateY(0)' : 'translateY(-100%)' }}
+        >
+            <div className='d-flex justify-center content-center h-auto p-0 md:p-1'>
                 {/* Visible for Desktop */}
                 <img src={a2svLogo} alt="A2SV" className='hidden md:block object-cover w-full h-full' />
                 {/* Visible for Mobile */}
                 <img src={a2svLogoSmall} alt="A2SV" className='md:hidden object-cover w-full h-full' />
             </div>
-            <div className='flex flex-row gap-4 md:gap-16 align-middle p-2 justify-center'>
+            <div className='flex flex-row gap-4 md:gap-16 align-middle justify-center'>
                 {
                     lastSyncTime.successOnce &&
                     <div className='text text-sm text-secondary-foreground text-center hidden lg:block'>
-                            <p className='text-base'>Last Synced {new Date(lastSyncTime.payload).toLocaleTimeString()}</p>
+                            <p className='text-base'> Last Synced {new Date(lastSyncTime.payload).toLocaleTimeString()} </p>
                     </div>
                 }
 
