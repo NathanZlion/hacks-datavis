@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/tabs"
 import { ArrowBigRight, Info, WandSparkles } from 'lucide-react';
 import Chart from 'react-google-charts';
+import { capitalizeFirstLetterOfEachWord } from '@/lib/utils';
 
 
 interface CountryNameToCodeMapping {
@@ -33,7 +34,7 @@ export const Countries = () => {
     // First, create an object with all countries set to value 0
     ...Object.entries(countryNameToCodeMapping).reduce((acc, [key]) => {
       acc[key.toLowerCase()] = {
-        name: key,
+        name: capitalizeFirstLetterOfEachWord(key),
         value: 0,
         icon: function icon() {
           return (
@@ -53,7 +54,7 @@ export const Countries = () => {
     // Then, update the object with countries that have participants
     ...Object.entries(countriesData).reduce((acc, [key, value]) => {
       acc[key.toLowerCase()] = {
-        name: key,
+        name: capitalizeFirstLetterOfEachWord(key),
         value: value.numberOfIndividualParticipants,
         icon: function icon() {
           return (
@@ -75,7 +76,7 @@ export const Countries = () => {
     // First, create an object with all countries set to value 0
     ...Object.entries(countryNameToCodeMapping).reduce((acc, [key]) => {
       acc[key.toLowerCase()] = {
-        name: key,
+        name: capitalizeFirstLetterOfEachWord(key),
         value: 0,
         icon: function icon() {
           return (
@@ -95,7 +96,7 @@ export const Countries = () => {
     // Then, update the object with countries that have participants
     ...Object.entries(countriesData).reduce((acc, [key, value]) => {
       acc[key.toLowerCase()] = {
-        name: key,
+        name: capitalizeFirstLetterOfEachWord(key),
         value: value.numberOfGroupParticipants,
         icon: function icon() {
           return (
@@ -129,6 +130,7 @@ export const Countries = () => {
     defaultColor: "#ffffff",
     is3D: true,
     legend: "none",
+    mapsApiKey: ""
   };
 
   // make the country names lowercase in the hashmap
