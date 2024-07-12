@@ -17,3 +17,7 @@ export enum LoadingState {
 export function cx(...args: ClassValue[]) {
   return twMerge(clsx(...args))
 }
+
+export function capitalizeFirstLetterOfEachWord(str: string) {
+  return str.split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+}
