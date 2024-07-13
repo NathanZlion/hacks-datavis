@@ -7,14 +7,23 @@ import { LineChart, TooltipProps } from '@/components/ui/linechart';
 import { format } from "date-fns"
 import { cx, LoadingState } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { SingleDayDataInterface, TimeseriesDataInterface, updateFullTimeseriesData } from '@/state/timeseries.slice';
+import { setRange, SingleDayDataInterface, TimeseriesDataInterface, TimeseriesRangeOptionHumanReadable, TimeseriesRangeOptions, updateFullTimeseriesData } from '@/state/timeseries.slice';
 import { useEffect } from 'react';
 import { RootState } from '@/store';
 import { ProgressCircle } from '@tremor/react';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger
+
+} from "@/components/ui/dropdown-menu";
+import { Calendar } from 'lucide-react';
+import { IoArrowDown } from 'react-icons/io5';
 
 
 export const Hero = () => {
-    const timeseriesData : TimeseriesDataInterface = useSelector((state: RootState) => state.timeseries);
+    const timeseriesData: TimeseriesDataInterface = useSelector((state: RootState) => state.timeseries);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -31,19 +40,38 @@ export const Hero = () => {
         <div className='min-h-[calc(100vh-20px)] md:p-10 pt-24 md:pt-28 flex justify-between flex-col'>
             <div className="px-5">
                 <Count />
-                <div className="flex flex-wrap justify-start gap-2 m-5">
+                <div className="flex flex-wrap justify-start gap-5 m-5">
                     <Button onClick={handleRefresh}>Refresh</Button>
-                </div>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className='flex flex-row justify-center gap-3 align-bottom border border-tremor-brand-subtle rounded p-2'>
+                            <Calendar />
+                            <div> {TimeseriesRangeOptionHumanReadable[timeseriesData.value.range]} </div>
+                            <IoArrowDown />
+                        </DropdownMenuTrigger>
+                        
+                        <DropdownMenuContent>
+                        {
+                            Object.entries(TimeseriesRangeOptionHumanReadable!).map(([numOfDays, humanReadableFormat], index) => (
+                                <DropdownMenuItem key={index} onClick={() => {
+                                    // @ts-ignore
+                                    dispatch(setRange(numOfDays as TimeseriesRangeOptions));
+                                }}>{humanReadableFormat}</DropdownMenuItem>
+                            ))
+                        }
+                        </DropdownMenuContent>
+                    </DropdownMenu>
 
+                </div>
                 {
                     timeseriesData.loadingState === LoadingState.Loading ? (
                         <div className="flex justify-center items-center md:h-80 w-full relative bg-tremor-content-inverted dark:bg-dark-tremor-brand-faint rounded-lg overflow-hidden">
                             <ProgressCircle className="text-primary" value={72} radius={50} />
                         </div>
                     ) :
+                  
                         <LineChart
                             className="w-max-[100%]"
-                            data={formatDateInTimeseriesData(timeseriesData.value.fullData)}
+                            data={formatDateInTimeseriesData(timeseriesData.value.dataInRange)}
                             index="date"
                             categories={["individual", "group", "total"]}
                             valueFormatter={(number: number) => `${Intl.NumberFormat("us").format(number).toString()}`}
@@ -60,7 +88,7 @@ export const Hero = () => {
 
 const formatDateInTimeseriesData = (data: SingleDayDataInterface[]) => {
     return data.map((item) => ({
-        date:format(new Date(item.date), "eee, LLL dd, y"),
+        date: format(new Date(item.date), "eee, LLL dd, y"),
         individual: item.individual,
         groupCount: item.groupCount,
         group: item.group,
@@ -80,7 +108,7 @@ const Tooltip = ({ payload, active, label }: TooltipProps) => {
             type: item.type
         })
     ).filter((item) => item.type !== undefined);
-    
+
     // 2024-06-18T00:00:00.000Z  =>  Fri, Jun 18, 2024
     const formattedLabel = format(new Date(label), "eee, LLL dd, y");
 
