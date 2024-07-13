@@ -18,6 +18,11 @@ export function cx(...args: ClassValue[]) {
   return twMerge(clsx(...args))
 }
 
+
+export function removeAcrossBrackets(str: string) {
+  return str.replace(/\s*\(.*?\)\s*/g, '').trim();
+}
+
 export function capitalizeFirstLetterOfEachWord(str: string) {
   return str.split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }

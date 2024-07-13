@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/tabs"
 import { ArrowBigRight, Info, WandSparkles } from 'lucide-react';
 import Chart from 'react-google-charts';
-import { capitalizeFirstLetterOfEachWord } from '@/lib/utils';
+import { capitalizeFirstLetterOfEachWord, removeAcrossBrackets } from '@/lib/utils';
 
 
 interface CountryNameToCodeMapping {
@@ -28,7 +28,8 @@ interface CountryNameToCodeMapping {
 }
 
 export const Countries = () => {
-  const countriesData: countryData = useSelector((state: any) => state.countries.value.payload);
+  var countriesData: countryData = useSelector((state: any) => state.countries.value.payload);
+  countriesData = Object.fromEntries(Object.entries(countriesData).map(([key, value]) => [removeAcrossBrackets(key), value]));
 
   const _individualData = Object.values({
     // First, create an object with all countries set to value 0
@@ -116,10 +117,10 @@ export const Countries = () => {
 
   const mapdata = [
     ["Country", "Participants"],
-    ...Object.entries(countryNameToCodeMapping).map(([key, _]) => ([key, 0])),
+    ...Object.entries(countryNameToCodeMapping).map(([key, _]) => ([capitalizeFirstLetterOfEachWord(key), 0])),
 
     // @ts-ignore
-    ...Object.entries(countriesData).map(([key, value]) => ([key, (value.numberOfGroupParticipants * 4) + value.numberOfIndividualParticipants])),
+    ...Object.entries(countriesData).map(([key, value]) => ([capitalizeFirstLetterOfEachWord(key), (value.numberOfGroupParticipants * 4) + value.numberOfIndividualParticipants])),
   ]
 
   const mapoptions = {
@@ -213,11 +214,13 @@ export const Countries = () => {
                 _, [countryName]
               ]) => (
                 <Badge key={countryName} icon={undefined} className='w-fit p-1 rounded-3xl mx-2'>
-                  <div className='overflow-hidden h-6  my-auto mr-2 hover:animate-pulse flex align-middle justify-center gap-2'>
-                    <img
-                      src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[countryName.toLowerCase()]}.svg`}
-                      className='object-fill h-6 w-14 inline rounded-full'
-                      alt={countryName} />
+                  <div className='overflow-hidden h-6 my-auto mr-2 hover:animate-pulse flex align-middle justify-center gap-2'>
+                    <div className="h-6 w-6">
+                      <img
+                        src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[countryName.toLowerCase()]}.svg`}
+                        className='object-fit inline rounded-full h-full w-full'
+                        alt={countryName} />
+                    </div>
 
                     <span className='inline text-tremor-default text-dark-tremor-content dark:text-tremor-brand-inverted'>
                       {countryName.split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
