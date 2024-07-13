@@ -9,11 +9,25 @@ export interface SingleDayDataInterface {
     group: number,
     groupCount: number
 }
+    
+export enum TimeseriesRangeOptions {
+    Last7Days = 7,
+    Last14Days = 14,
+    Last30Days = 30,
+    AllTime = -1
+}
+
+export const TimeseriesRangeOptionHumanReadable = {
+    [TimeseriesRangeOptions.Last7Days]: 'Last 7 Days',
+    [TimeseriesRangeOptions.Last14Days]: 'Last 2 Weeks',
+    [TimeseriesRangeOptions.Last30Days]: 'Last Month',
+    [TimeseriesRangeOptions.AllTime]: 'All Time'
+}
 
 export interface TimeseriesDataInterface {
     loadingState: LoadingState,
     value: {
-        range: [string | null, string | null],
+        range: TimeseriesRangeOptions,
         fullData: SingleDayDataInterface[],
         dataInRange: SingleDayDataInterface[],
     },
@@ -25,11 +39,7 @@ export const timeseriesSlice = createSlice({
     initialState: {
         loadingState: LoadingState.LoadingInitial,
         value: {
-            range: [
-                // june 1 - Hackathon Registration Starting Date
-                new Date("2024-06-01").toLocaleDateString(),
-                new Date().toLocaleDateString()
-            ] ,
+            range: TimeseriesRangeOptions.Last14Days,
             fullData: [] as SingleDayDataInterface[],
             dataInRange:  [] as SingleDayDataInterface[],
         },
@@ -37,18 +47,6 @@ export const timeseriesSlice = createSlice({
     } as TimeseriesDataInterface,
 
     reducers: {
-        changeRangeForTimeseriesData: (state, action: PayloadAction<[string | null, string | null]>) => {
-            state.value.range = action.payload;
-        },
-
-        resetTimeSeriesRange: (state) => {
-            state.value.range = [
-                // june 1 - Hackathon Registration Starting Date
-                new Date("2024-06-01").toLocaleDateString(),
-                new Date().toLocaleDateString()
-            ];
-        },
-
         setFullData: (state, action: PayloadAction<SingleDayDataInterface[]>) => {
             state.value.fullData = action.payload;
         },
@@ -57,8 +55,10 @@ export const timeseriesSlice = createSlice({
             state.value.dataInRange = action.payload;
         },
 
-        setRange: (state, action: PayloadAction<[string | null, string | null]>) => {
-            state.value.range = action.payload;
+        setRange: (state, action: PayloadAction<TimeseriesRangeOptions>) => {
+            const lastXDays = action.payload;
+            state.value.range = lastXDays;
+            state.value.dataInRange = _dataInRange(state.value.fullData, lastXDays);
         },
         
         setLoadingState: (state, action: PayloadAction<LoadingState>) => {
@@ -71,14 +71,6 @@ export const timeseriesSlice = createSlice({
         });
 
         builder.addCase(updateFullTimeseriesData.rejected, (state) => {
-            state.loadingState = LoadingState.LoadingError;
-        });
-
-        builder.addCase(updateTimeseriesDataInRange.fulfilled, (state) => {
-            state.loadingState = LoadingState.LoadingSuccess;
-        });
-
-        builder.addCase(updateTimeseriesDataInRange.rejected, (state) => {
             state.loadingState = LoadingState.LoadingError;
         });
     }
@@ -102,60 +94,15 @@ export const updateFullTimeseriesData = createAsyncThunk<void, void, { state: Ro
     }
 );
 
-export const updateTimeseriesDataInRange = createAsyncThunk<void, void, { state: RootState }>(
-    'timeseries/updateTimeseriesDataInRange',
-    async (_, { dispatch, getState }) => {
-        try {
-            dispatch(timeseriesSlice.actions.setLoadingState(LoadingState.Loading));
-            const state = getState();
-            const [start, end] = state.timeseries.value.range;
-            const result = await ApiService.getTimeseriesData(start, end);
 
-            if (result.success) {
-                dispatch(timeseriesSlice.actions.setDataInRange(result.value || []));
-                dispatch(timeseriesSlice.actions.setFullData(_patchDataInRange(state.timeseries.value.fullData, result.value || [])));
-                dispatch(timeseriesSlice.actions.setLoadingState(LoadingState.LoadingSuccess));
-            } else {
-                dispatch(timeseriesSlice.actions.setLoadingState(LoadingState.LoadingError));
-            }
-        }
-        catch (error) {
-            dispatch(timeseriesSlice.actions.setLoadingState(LoadingState.LoadingError));
-        }
+const _dataInRange = (sortedData: SingleDayDataInterface[], range: TimeseriesRangeOptions) : SingleDayDataInterface[]=> {
+    if (range === TimeseriesRangeOptions.AllTime) {
+        return sortedData;
     }
-);
-
-
-
-const _patchDataInRange = (data: SingleDayDataInterface[], updatedDataInRange: SingleDayDataInterface[]): SingleDayDataInterface[] => {
-    const dataMap = data.reduce((acc, data) => {
-        acc[new Date(data.date).toLocaleDateString()] = data;
-        return acc;
-    }, {} as { [key: string]: SingleDayDataInterface });
-
-    const updatedDataMap = updatedDataInRange.reduce((acc, data) => {
-        acc[new Date(data.date).toLocaleDateString()] = data;
-        return acc;
-    }, {} as { [key: string]: SingleDayDataInterface });
-
-    // update the dataMap with the updatedDataMap
-    const mergedData = { ...dataMap, ...updatedDataMap }
-
-    // convert the dataMap back to the original format
-    return Object.values(mergedData);
-}
-
-// Uses Linear Search, to filter the data in range, for now. It should be optimized to do a binary search later on
-// because the data is sorted when it comes from the backend.
-const _dataInRange = (sortedData: SingleDayDataInterface[], [startDate, endDate]: [string | null, string | null]) : SingleDayDataInterface[]=> {
-    return sortedData.filter(data => {
-        const date = new Date(data.date
-        ).toLocaleDateString();
-        return date >= startDate! && date <= endDate!;
-    });
-
+    return sortedData.slice(-range);
 }
 
 
-export const { resetTimeSeriesRange, changeRangeForTimeseriesData } = timeseriesSlice.actions;
+
+export const { setRange } = timeseriesSlice.actions;
 export default timeseriesSlice.reducer;
