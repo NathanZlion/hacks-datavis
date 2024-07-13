@@ -40,7 +40,7 @@ export const Hero = () => {
         <div className='min-h-[calc(100vh-20px)] md:p-10 pt-24 md:pt-28 flex justify-between flex-col'>
             <div className="px-5">
                 <Count />
-                <div className="flex flex-wrap justify-start gap-5 m-5">
+                <div className="flex flex-wrap justify-center md:justify-end gap-5 m-5">
                     <Button onClick={handleRefresh}>Refresh</Button>
                     <DropdownMenu>
                         <DropdownMenuTrigger className='flex flex-row justify-center gap-3 align-bottom border border-tremor-brand-subtle rounded p-2'>
