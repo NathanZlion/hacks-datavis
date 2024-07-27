@@ -115,6 +115,52 @@ export const Countries = () => {
     }, {} as { [key: string]: { name: string; value: number; icon: () => JSX.Element } })
   });
 
+
+  
+  // individual plus group
+  const _totalData = Object.values({
+    // First, create an object with all countries set to value 0
+    ...Object.entries(countryNameToCodeMapping).reduce((acc, [key]) => {
+      acc[key.toLowerCase()] = {
+        name: capitalizeFirstLetterOfEachWord(key),
+        value: 0,
+        icon: function icon() {
+          return (
+            <div className='overflow-hidden w-6 h-6 rounded-full my-auto mr-2'>
+              <img
+                src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[key.toLowerCase()]}.svg`}
+                className='object-contain hover:object-scale-down w-full h-full'
+                alt={key}
+              />
+            </div>
+          );
+        },
+      };
+      return acc;
+    }, {} as { [key: string]: { name: string; value: number; icon: () => JSX.Element } }),
+
+    // Then, update the object with countries that have participants
+    ...Object.entries(countriesData).reduce((acc, [key, value]) => {
+      acc[key.toLowerCase()] = {
+        name: capitalizeFirstLetterOfEachWord(key),
+        value: value.numberOfGroupParticipants * 4 + value.numberOfIndividualParticipants,
+        icon: function icon() {
+          return (
+            <div className='overflow-hidden w-6 h-6 rounded-full my-auto mr-2'>
+              <img
+                src={`https://flagcdn.com/${(countryNameToCodeMapping as CountryNameToCodeMapping)[key.toLowerCase()]}.svg`}
+                className='object-contain hover:object-scale-down w-full h-full'
+                alt={key}
+              />
+            </div>
+          );
+        },
+      };
+      return acc;
+    }, {} as { [key: string]: { name: string; value: number; icon: () => JSX.Element } })
+  });
+
+  console.log(_totalData);
   const mapdata = [
     ["Country", "Participants"],
     ...Object.entries(countryNameToCodeMapping).map(([key, _]) => ([capitalizeFirstLetterOfEachWord(key), 0])),
@@ -155,9 +201,10 @@ export const Countries = () => {
         </div>
 
         <Tabs defaultValue="individual" className="overflow-hidden p-0 h-full mx-auto md:ms-0 w-full">
-          <TabsList className='grid w-full grid-cols-2'>
-            <TabsTrigger value="individual">Individual</TabsTrigger>
-            <TabsTrigger value="group">Group</TabsTrigger>
+          <TabsList className='grid w-full h-auto grid-cols-1 md:grid-cols-3'>
+            <TabsTrigger className="text-left overflow-hidden" value="individual">Individual Registrations</TabsTrigger>
+            <TabsTrigger className="text-left overflow-hidden" value="group">Group Registrations</TabsTrigger>
+            <TabsTrigger className="text-left overflow-hidden" value="total">Total Participants</TabsTrigger>
           </TabsList>
 
           <TabsContent value="individual" className='w-full h-full p-0 m-0'>
@@ -190,6 +237,26 @@ export const Countries = () => {
               </CardHeader>
               <CardContent className='overflow-y-scroll h-[65%] m-0 '>
                 <BarList data={_groupData} className="h-full" />
+              </CardContent>
+              <CardFooter className='mt-2 text-tremor-default flex items-center gap-2 justify-start text-tremor-content dark:text-dark-tremor-content'>
+                <Info />
+                <span className='text-sm'> This is the number of registrants that registered in groups. </span>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+
+
+          <TabsContent value="total" className='w-full h-full p-0 m-0'>
+            <Card className="mx-auto mt-3 h-[85%]">
+              <CardHeader>
+                <CardTitle> Total</CardTitle>
+                <CardDescription className='mt-4 text-tremor-default flex items-center justify-between text-tremor-content dark:text-dark-tremor-content'>
+                  <span>Country</span>
+                  <span>Registrations</span>
+                </CardDescription>
+              </CardHeader>
+              <CardContent className='overflow-y-scroll h-[65%] m-0 '>
+                <BarList data={_totalData} className="h-full" />
               </CardContent>
               <CardFooter className='mt-2 text-tremor-default flex items-center gap-2 justify-start text-tremor-content dark:text-dark-tremor-content'>
                 <Info />
