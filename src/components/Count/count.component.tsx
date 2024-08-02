@@ -16,7 +16,7 @@ export const Count = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 justify-start md:justify-center gap-3 text-center  mx-auto m-auto w-full px-auto">
                 {/* Total registration plus, idea submission without registering */}
-                <CountCard cardTitle={"Total Registration"} cardValue={people ? people.totalParticipants + 122 : 0} cardIcon={faClipboardUser} />
+                <CountCard cardTitle={"Total Registration"} cardValue={people ? people.totalParticipants : 0} cardIcon={faClipboardUser} />
 
                 {/* Countries count */}
                 <CountCard cardTitle={"Countries"} cardValue={people ? people.countryCount : 0} cardIcon={faEarthAfrica}/>
@@ -25,7 +25,7 @@ export const Count = () => {
                 <CountCard cardTitle={"Individuals"} cardValue={people ? people.individualParticipants : 0} cardIcon={faPerson} />
 
                 {/* Group registrations plus, idea submission without registering */}
-                <CountCard cardTitle={"Groups"} cardValue={people ? people.groupParticipants + 36: 0} cardIcon={faUsersLine} />
+                <CountCard cardTitle={"Groups"} cardValue={people ? people.groupParticipants : 0} cardIcon={faUsersLine} />
             </div>
         </div>
     );
