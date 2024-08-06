@@ -98,7 +98,7 @@ export const Countries = () => {
     ...Object.entries(countriesData).reduce((acc, [key, value]) => {
       acc[key.toLowerCase()] = {
         name: capitalizeFirstLetterOfEachWord(key),
-        value: value.numberOfGroupParticipants,
+        value: value.numberOfGroupParticipants * 4,
         icon: function icon() {
           return (
             <div className='overflow-hidden w-6 h-6 rounded-full my-auto mr-2'>
@@ -116,7 +116,7 @@ export const Countries = () => {
   });
 
 
-  
+
   // individual plus group
   const _totalData = Object.values({
     // First, create an object with all countries set to value 0
@@ -296,7 +296,7 @@ export const Countries = () => {
                 </Badge>
               ))
             }
-            <ScrollBar orientation="horizontal" asChild={true} className='border border-black bg-dark-tremor-brand-faint'/>
+            <ScrollBar orientation="horizontal" asChild={true} className='border border-black bg-dark-tremor-brand-faint' />
           </ScrollArea>
         </div>
       </div>
