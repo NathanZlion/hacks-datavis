@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 
 interface props {
   cardTitle: string,
-  cardValue: string,
+  cardValue: string | number,
   cardMutedValue?: string,
   // a font awesome icon definition
   cardIcon?: IconDefinition,
@@ -24,7 +24,7 @@ export default function CountCard({ cardTitle, cardIcon = faEarthAfrica, cardVal
   const grandstate: string = useSelector((state: any) => state.grandState.value);
 
   return (
-    <Card className={_className + ""}>
+    <Card className={_className + " "}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
         <CardTitle className="text-sm font-medium">{cardTitle}</CardTitle>
         <FontAwesomeIcon icon={cardIcon} className="h-8 w-8 text-muted-foreground" />
@@ -37,7 +37,7 @@ export default function CountCard({ cardTitle, cardIcon = faEarthAfrica, cardVal
 
         {
           (grandstate === grandStateEnum.Loaded) &&
-          <div className="text-4xl md:text-5xl font-bold text-start">{cardValue}</div>
+          <div className="text-3xl md:text-4xl font-bold text-start">{cardValue}</div>
         }
 
         <p className="text-xs text-muted-foreground">{cardMutedValue}</p>

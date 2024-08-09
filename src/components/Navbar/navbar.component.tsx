@@ -99,13 +99,21 @@ export const Navbar = () => {
 
 
     return (
-        <nav className='h-20 py-4 shadow-md bg-secondary  w-full text-3xl fixed mb-10 flex flex-row align-center justify-between z-50 p-5 '>
+        <nav
+            className='h-20 py-4 shadow-md bg-secondary  w-full text-3xl sticky top-0 flex flex-row align-center justify-between z-50 p-5 '>
+
+            {/* Logo */}
             <div className='d-flex justify-center content-center h-auto p-2 md:p-3'>
                 {/* Visible for Desktop */}
                 <img src={a2svLogo} alt="A2SV" className='hidden md:block object-cover w-full h-full' />
                 {/* Visible for Mobile */}
                 <img src={a2svLogoSmall} alt="A2SV" className='md:hidden object-cover w-full h-full' />
             </div>
+
+
+            <h2 className='flex-1 text-base md:text-2xl my-auto font-thin'> AI for Impact Hackathon </h2>
+
+
             <div className='flex flex-row gap-4 md:gap-16 align-middle p-2 justify-center'>
                 {
                     lastSyncTime.successOnce &&
@@ -115,7 +123,8 @@ export const Navbar = () => {
                 }
 
                 {/* {lastSyncTime.successOnce} */}
-                <button onClick={() => { handleReload(true) }} className='w-8 h-8 my-auto flex hover:cursor-pointer items-center rounded-sm text-sm outline-none focus:bg-accent'>
+                <button onClick={() => { handleReload(true) }}
+                    className='w-8 h-8 my-auto flex hover:cursor-pointer items-center rounded-sm text-sm outline-none focus:bg-accent'>
                     <ProgressCircle
                         className={grandstate === grandStateEnum.Loading ? 'animate-spin w-fit text-primary my-auto' : 'text-primary bg-accent my-auto'}
                         tooltip="Refresh"

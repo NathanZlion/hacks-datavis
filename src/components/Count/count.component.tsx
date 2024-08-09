@@ -11,9 +11,9 @@ export const Count = () => {
 
     return (
         <div className="flex gap-6 flex-col">
-            <div className="text-4xl text-center"> A2SV AI for Impact Hackathon </div>
+            <div className="text-3xl text-center block lg:hidden"> A2SV AI for Impact Hackathon </div>
 
-            <div className="text-center text-2xl"> Participation Statistics </div>
+            <div className="text-center text-2xl block lg:hidden"> Participation Statistics </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 justify-start md:justify-center gap-3 text-center  mx-auto m-auto w-full px-auto">
                 {/* Total registration plus, idea submission without registering */}
