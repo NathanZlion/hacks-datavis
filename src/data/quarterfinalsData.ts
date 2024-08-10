@@ -359,14 +359,11 @@ export const Teams: Team[] = [
             "Alazar Ashabir",
             "Emanuel Solomon",
             "Estifanos Behailu",
-            "Alazar Ashebir",
-            "Emanuel Solomon",
-            "Estifanos Behailu"
         ],
         "Countries": [
             "Ethiopia",
             "Ethiopia",
-            "Ethiopia", "Ethiopia", "Ethiopia", "Ethiopia"
+            "Ethiopia"
         ], "category": "AI Driven Artistry and Innovation"
     },
     {
