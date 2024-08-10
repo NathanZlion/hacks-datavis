@@ -193,8 +193,8 @@ export const Countries = () => {
 
 
   return (
-    <div className='grid grid-cols-1 lg:grid-cols-2  px-3 md:px-20'>
-      <div className="p-2 pt-5 md:pt-10 overflow-hidden h-[calc(100vh-120px)] flex flex-col justify-start m-0" >
+    <div className='grid grid-cols-1 lg:grid-cols-2'>
+      <div className="pt-5 md:pt-10 overflow-hidden h-[calc(100vh-120px)] flex flex-col justify-start m-0" >
         <div className="text-4xl mb-5 flex-shrink text-center md:text-start">
           Distribution By Country
         </div>
