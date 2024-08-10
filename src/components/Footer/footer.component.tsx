@@ -2,7 +2,7 @@ import { IoLogoGithub } from "react-icons/io5";
 
 export const Footer = () => {
     return (
-        <footer className="flex flex-col lg:flex-row align-center justify-center text-center m-0 bg-secondary dark:text-white p-2 px-5 sticky bottom-0">
+        <footer className="flex flex-col lg:flex-row align-center justify-center text-center m-0 bg-secondary dark:text-white p-2 px-5 fixed bottom-0 w-full">
             <a href="https://github.com/NathanZlion/hacks-datavis"
                 target="_blank"
                 className="flex flex-1 text-primary align-center w-fill gap-2 justify-center order-2">
