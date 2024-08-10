@@ -5,7 +5,7 @@ import { Count } from '../Count/count.component';
 import { HorizontalLine } from '../ui/divider';
 import { LineChart, TooltipProps } from '@/components/ui/linechart';
 import { format } from "date-fns"
-import { cx, LoadingState } from "@/lib/utils"
+import { cx } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { setRange, SingleDayDataInterface, TimeseriesDataInterface, TimeseriesRangeOptionHumanReadable, TimeseriesRangeOptions, updateFullTimeseriesData } from '@/state/timeseries.slice';
 import { useEffect } from 'react';
@@ -20,10 +20,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Calendar } from 'lucide-react';
 import { IoArrowDown } from 'react-icons/io5';
+import { grandStateEnum } from '@/state/grandstate.slice';
 
 
 export const Hero = () => {
     const timeseriesData: TimeseriesDataInterface = useSelector((state: RootState) => state.timeseries);
+    const grandstate: string = useSelector((state: any) => state.grandState.value);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -63,7 +66,7 @@ export const Hero = () => {
 
                 </div>
                 {
-                    timeseriesData.loadingState === LoadingState.Loading ? (
+                    (grandstate === grandStateEnum.Loading) ? (
                         <div className="flex justify-center items-center md:h-80 w-full relative bg-tremor-content-inverted dark:bg-dark-tremor-brand-faint rounded-lg overflow-hidden">
                             <ProgressCircle className="text-primary" value={72} radius={50} />
                         </div>
@@ -75,7 +78,7 @@ export const Hero = () => {
                             index="date"
                             categories={["individual", "group", "total"]}
                             valueFormatter={(number: number) => `${Intl.NumberFormat("us").format(number).toString()}`}
-                            onValueChange={(v) => console.log(v)}
+                            onValueChange={() => { }}
                             showLegend={false}
                             customTooltip={Tooltip}
                         />

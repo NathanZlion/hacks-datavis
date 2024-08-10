@@ -22,11 +22,15 @@ export const Navbar = () => {
 
 
     const handleReload = async (userTrigerred: boolean = false) => {
+     // { userTrigerred }: ReloadParameter) => {
+
         // avoid multiple reloads
         if (grandstate === grandStateEnum.Loading) return;
 
         try {
-            dispatch(startLoading()); // Dispatch a pending action
+            if (userTrigerred) {
+                dispatch(startLoading());
+            } // Dispatch a pending action
 
             const countryResponse = await ApiService.getCountryData();
             if (!countryResponse.success) throw countryResponse.error;
@@ -49,20 +53,16 @@ export const Navbar = () => {
             if (!timeseriesDataResponse.success) throw timeseriesDataResponse.error;
             // @ts-ignore
             dispatch(updateFullTimeseriesData());
-
             dispatch(loadComplete());
             dispatch(updateLastSyncTimeJustNow());
 
-            if (userTrigerred) {
-                toast(
-                    {
-                        title: "Refreshed Success",
-                        description: "Your data is now upto date!",
-                        className: "shadow shadow-sm shadow-slate-700 dark:shadow-white"
-
-                    }
-                )
-            }
+            toast(
+                {
+                    title: userTrigerred? "Refreshed Success": "Synced",
+                    description: userTrigerred ? "Your data is now upto date!" : "",
+                    className: "shadow shadow-sm shadow-slate-700 dark:shadow-white h-fit w-fit ml-auto"
+                }
+            )
         } catch (error) {
             dispatch(loadFailed())
 
@@ -87,11 +87,11 @@ export const Navbar = () => {
     useEffect(() => {
         handleReload();
         const MILLISECONDS_IN_MINUTE = 60000;
-        const reloadIntervalInMinutes = 2;
+        const reloadIntervalInMinutes = 10;
         const reloadInterval = reloadIntervalInMinutes * MILLISECONDS_IN_MINUTE;
 
         const interval = setInterval(() => {
-            handleReload(false);
+            handleReload();
         }, reloadInterval);
 
         return () => clearInterval(interval);

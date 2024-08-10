@@ -30,8 +30,8 @@ function App() {
 
         {/* the whole things below will be an outlet */}
         <Navbar />
-        <TabGroup className='px-5 flex-1'>
-          <TabList className="mt-4 flex justify-center md:justify-start">
+        <TabGroup className="px-5 flex-1 relative">
+          <TabList className="mt-4 flex justify-center md:justify-start sticky top-20 from-primary-foreground bg-background z-10">
             <Tab>Overview</Tab>
             <Tab>Quarterfinals</Tab>
             <Tab>Semifinals</Tab>
