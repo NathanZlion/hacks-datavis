@@ -54,7 +54,7 @@ export default function Quarterfinals() {
     const modalDragConstraintsRef = useRef(null)
 
     return (
-        <div className="container flex flex-col gap-0">
+        <div className="p-0 lg:container flex flex-col gap-0">
             <h1 className="text-4xl p-3">Quarterfinals Teams Statistics</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-10 lg:gap-20">
@@ -77,7 +77,7 @@ export default function Quarterfinals() {
             </div>
 
 
-            <div className="mt-16 mb-5 lg:p-10">
+            <div className="mt-16 mb-10 lg:mb-0 lg:p-10">
                 <h1 className="text-3xl">Teams</h1>
                 {/* Team Stat */}
                 <div
@@ -93,7 +93,7 @@ export default function Quarterfinals() {
                             onClick={() => openModal(index)}
                             whileHover={{ scale: 1.05, zIndex: 30 }}
                             whileDrag={{ scale: 1.05 }}
-                            className="p-5 border container h-full lg:h-1/2  max-w-full w-2/3 \
+                            className="p-5 border lg:container h-full lg:h-1/2  max-w-full w-2/3 \
                             lg:w-1/3 hover:cursor-pointer hover:shadow-sm backdrop-blur-sm hover:shadow-secondary hover:z-50 rounded-lg"
                         >
                             {/* Card */}
