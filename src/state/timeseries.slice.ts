@@ -1,5 +1,4 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { LoadingState } from "@/lib/utils";
 import { ApiService } from "@/services/apiService";
 import { RootState } from "@/store";
 
@@ -25,7 +24,6 @@ export const TimeseriesRangeOptionHumanReadable = {
 }
 
 export interface TimeseriesDataInterface {
-    loadingState: LoadingState,
     value: {
         range: TimeseriesRangeOptions,
         fullData: SingleDayDataInterface[],
@@ -37,7 +35,6 @@ export interface TimeseriesDataInterface {
 export const timeseriesSlice = createSlice({
     name: 'timeseries',
     initialState: {
-        loadingState: LoadingState.LoadingInitial,
         value: {
             range: TimeseriesRangeOptions.Last14Days,
             fullData: [] as SingleDayDataInterface[],
@@ -60,36 +57,19 @@ export const timeseriesSlice = createSlice({
             state.value.range = lastXDays;
             state.value.dataInRange = _dataInRange(state.value.fullData, lastXDays);
         },
-        
-        setLoadingState: (state, action: PayloadAction<LoadingState>) => {
-            state.loadingState = action.payload;
-        }
     },
-    extraReducers: (builder) => {
-        builder.addCase(updateFullTimeseriesData.fulfilled, (state) => {
-            state.loadingState = LoadingState.LoadingSuccess;
-        });
-
-        builder.addCase(updateFullTimeseriesData.rejected, (state) => {
-            state.loadingState = LoadingState.LoadingError;
-        });
-    }
 });
 
 
 export const updateFullTimeseriesData = createAsyncThunk<void, void, { state: RootState }>(
     'timeseries/updateFullTimeseriesData',
     async (_, { dispatch, getState }) => {
-        dispatch(timeseriesSlice.actions.setLoadingState(LoadingState.Loading));
         const result = await ApiService.getTimeseriesData();
 
         if (result.success) {
             dispatch(timeseriesSlice.actions.setFullData(result.value || []));
             const state = getState();
             dispatch(timeseriesSlice.actions.setDataInRange(_dataInRange(state.timeseries.value.fullData, state.timeseries.value.range)));
-            dispatch(timeseriesSlice.actions.setLoadingState(LoadingState.LoadingSuccess));
-        } else {
-            dispatch(timeseriesSlice.actions.setLoadingState(LoadingState.LoadingError));
         }
     }
 );
