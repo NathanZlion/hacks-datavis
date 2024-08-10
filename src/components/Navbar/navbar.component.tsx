@@ -5,25 +5,25 @@ import { summaryDataInterface, updateParticipantsInfo } from '../../state/summar
 import { useEffect } from 'react';
 import { ApiService } from '../../services/apiService';
 import { updateCountries } from '../../state/countries.slice';
-import a2svLogo from '../../assets/A2SV_LOGO.svg';
-import a2svLogoSmall from '../../assets/A2SV Logo Small.svg';
+import darkLogo from '../../assets/A2SV_logo_black.svg';
+import lightLogo from '../../assets/A2SV_logo_white.svg';
 import { updatePrevParticipationData } from '../../state/prevParticipation.slice';
 import { ModeToggle } from '../ui/modetoggle';
 import { useToast } from '../ui/use-toast';
 import { ProgressCircle } from '@tremor/react';
 import { updateLastSyncTimeJustNow } from '@/state/lastSync.slice';
 import { updateFullTimeseriesData } from '@/state/timeseries.slice';
+import { useTheme } from 'next-themes';
 
 export const Navbar = () => {
     const dispatch = useDispatch();
     const grandstate: string = useSelector((state: any) => state.grandState.value);
     const lastSyncTime = useSelector((state: any) => state.lastSynced.value)
     const { toast } = useToast()
+    const { theme } = useTheme();
 
 
     const handleReload = async (userTrigerred: boolean = false) => {
-     // { userTrigerred }: ReloadParameter) => {
-
         // avoid multiple reloads
         if (grandstate === grandStateEnum.Loading) return;
 
@@ -99,22 +99,15 @@ export const Navbar = () => {
 
 
     return (
-        <nav
-            className='h-20 py-4 shadow-md bg-secondary  w-full text-3xl sticky top-0 flex flex-row align-center justify-between z-50 p-5 '>
+        <nav className='h-16 py-4 shadow-md bg-secondary  w-full text-3xl sticky top-0 flex flex-row align-center justify-between z-50 p-5 '>
 
             {/* Logo */}
-            <div className='d-flex justify-center content-center h-auto p-2 md:p-3'>
-                {/* Visible for Desktop */}
-                <img src={a2svLogo} alt="A2SV" className='hidden md:block object-cover w-full h-full' />
-                {/* Visible for Mobile */}
-                <img src={a2svLogoSmall} alt="A2SV" className='md:hidden object-cover w-full h-full' />
+            <div className='flex justify-center content-center h-auto p-0 w-10 mx-5'>
+                <img src={theme === 'light' ? darkLogo : lightLogo} alt="A2SV" className='w-full h-full' />
             </div>
 
-
-            <h2 className='flex-1 text-base md:text-2xl my-auto font-thin'> AI for Impact Hackathon </h2>
-
-
-            <div className='flex flex-row gap-4 md:gap-16 align-middle p-2 justify-center'>
+            <h2 className='flex-1 text-base md:text-3xl my-auto font-thin'> AI for Impact Hackathon </h2>
+            <div className='flex flex-row gap-2 md:gap-5 align-middle justify-center px-3'>
                 {
                     lastSyncTime.successOnce &&
                     <div className='text text-sm text-secondary-foreground text-center hidden lg:block'>
