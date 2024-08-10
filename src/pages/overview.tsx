@@ -5,8 +5,8 @@ import { PrevHackathonPartcipation } from "@/components/PrevHackathonParticipati
 
 export default function Overview() {
     return (
-        <div className='flex flex-col gap-0'>
-            <h1 className="text-4xl p-3">Hackathon Statistics</h1>
+        <div className="p-0 lg:container flex flex-col gap-0">
+            <h1 className="text-4xl p-3">Hackathon Overview</h1>
 
             <Hero />
             <Countries />
