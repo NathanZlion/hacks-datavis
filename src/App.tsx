@@ -18,36 +18,27 @@ function App() {
 
   return (
     <ThemeProvider
-    attribute="class"
-    defaultTheme="system"
-    enableSystem
-    disableTransitionOnChange
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
     >
-      <Analytics />
-      {/* the navbar goes here */}
-      {/* {children} */}
+      <Analytics /> {/* To collect analytics */}
       <div className='relative bg-background text-primary flex flex-col'>
 
-        {/* the whole things below will be an outlet */}
         <Navbar />
         <TabGroup className="px-5 flex-1 relative">
-          <TabList className="mt-4 flex justify-center md:justify-start sticky top-20 from-primary-foreground bg-background z-10">
+
+          <TabList className="container mt-3 flex justify-center md:justify-start sticky top-16 from-primary-foreground z-10 backdrop-blur-lg">
             <Tab>Overview</Tab>
             <Tab>Quarterfinals</Tab>
             <Tab>Semifinals</Tab>
           </TabList>
+
           <TabPanels>
-            <TabPanel>
-              <Overview />
-            </TabPanel>
-
-            <TabPanel>
-              <Quarterfinals />
-            </TabPanel>
-
-            <TabPanel>
-              <Semifinals />
-            </TabPanel>
+            <TabPanel> <Overview /> </TabPanel>
+            <TabPanel> <Quarterfinals /> </TabPanel>
+            <TabPanel> <Semifinals /> </TabPanel>
 
           </TabPanels>
         </TabGroup>
