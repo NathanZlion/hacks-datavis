@@ -40,8 +40,8 @@ export const Hero = () => {
     }
 
     return (
-        <div className='h-fit flex justify-between flex-col p-5'>
-            <div className="px-5 flex flex-col">
+        <div className='h-fit flex justify-between flex-col p-0 lg:p-5'>
+            <div className="flex flex-col">
                 <Count />
                 <div className="flex justify-center md:justify-end gap-5 m-5">
                     <Button onClick={handleRefresh}>Refresh</Button>
