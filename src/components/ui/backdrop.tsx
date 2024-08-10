@@ -10,9 +10,7 @@ const BackDrop = ({
     return (
         <motion.div
             key={"backdrop"}
-            className="
-            absolute top-0 left-0 h-[100%] w-full bg-[#00000099] z-50 flex justify-center align-middle
-            "
+            className="fixed inset-0 top-0 left-0 h-screen w-full bg-[#00000099] z-50 flex justify-center align-middle"
             onClick={onClick}
             initial={{opacity: 0}}
             animate={{opacity: 1}}

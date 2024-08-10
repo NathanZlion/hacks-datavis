@@ -98,7 +98,17 @@ td {
 }
 
 
-/* for debugging purpose only */
+.stylish-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary)) hsl(var(--accent));
+    --webkit-scrollbar-width: '2px';
+    --webkit-scrollbar-color: hsl(var(--primary)) hsl(var(--accent));
+}
+
+/*
+For peaceful debugging purposes only,
+😂 I would be really amazed if someone read the above comment. Star the repo if you did.
+*/
 /* * {
   outline: solid 2px red;
 } */
