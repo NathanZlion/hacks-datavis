@@ -160,7 +160,6 @@ export const Countries = () => {
     }, {} as { [key: string]: { name: string; value: number; icon: () => JSX.Element } })
   });
 
-  console.log(_totalData);
   const mapdata = [
     ["Country", "Participants"],
     ...Object.entries(countryNameToCodeMapping).map(([key, _]) => ([capitalizeFirstLetterOfEachWord(key), 0])),
