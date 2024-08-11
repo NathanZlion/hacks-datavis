@@ -28,10 +28,12 @@ export const PrevHackathonPartcipation = () => {
                 Have you participated in A2SV or Other Hackathons?
             </div>
 
-            <BarChart index="name" data={chartData} categories={['Yes', 'No']} colors={['blue', 'red']} 
-                    valueFormatter={dataFormatter}
-                    yAxisWidth={48}
-                    className="w-full"
+            <BarChart
+                index="name"
+                data={chartData} categories={['Yes', 'No']} colors={['blue', 'red']}
+                valueFormatter={dataFormatter}
+                yAxisWidth={48}
+                className="w-full"
             />
         </div>
     );
