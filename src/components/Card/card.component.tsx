@@ -4,11 +4,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { cn } from "@/lib/utils";
 import { grandStateEnum } from "@/state/grandstate.slice";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons"
 import { faEarthAfrica } from '@fortawesome/free-solid-svg-icons/faEarthAfrica';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
+import CountUp from 'react-countup';
+
 
 interface props {
   cardTitle: string,
@@ -17,15 +20,24 @@ interface props {
   // a font awesome icon definition
   cardIcon?: IconDefinition,
   className?: string
+  showAnimation?: boolean,
+  animationDuration?: number
 }
 
 
-export default function CountCard({ cardTitle, cardIcon = faEarthAfrica, cardValue, cardMutedValue, className: _className = "" }: props) {
+export default function CountCard({
+  cardTitle,
+  cardIcon = faEarthAfrica,
+  cardValue, cardMutedValue,
+  className: _className = "",
+  showAnimation = true,
+  animationDuration = 2
+}: props) {
   const grandstate: string = useSelector((state: any) => state.grandState.value);
 
   return (
-    <Card className={_className + " "}>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1">
+    <Card className={cn(_className, "flex flex-col justify-between align-top p-0")}>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 py-5">
         <CardTitle className="text-sm font-medium">{cardTitle}</CardTitle>
         <FontAwesomeIcon icon={cardIcon} className="h-8 w-8 text-muted-foreground" />
       </CardHeader>
@@ -37,7 +49,15 @@ export default function CountCard({ cardTitle, cardIcon = faEarthAfrica, cardVal
 
         {
           (grandstate === grandStateEnum.Loaded) &&
-          <div className="text-3xl md:text-4xl font-bold text-start">{cardValue}</div>
+          (
+            showAnimation ?
+              <CountUp
+                end={parseInt(cardValue.toString())}
+                duration={animationDuration}
+                className="text-3xl md:text-5xl font-bold text-start block m-0"
+                /> :
+              <div className="text-3xl md:text-4xl font-bold text-start">{cardValue}</div>
+          )
         }
 
         <p className="text-xs text-muted-foreground">{cardMutedValue}</p>
