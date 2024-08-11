@@ -23,7 +23,7 @@ import Chart from 'react-google-charts';
 import { capitalizeFirstLetterOfEachWord, removeAcrossBrackets } from '@/lib/utils';
 
 
-interface CountryNameToCodeMapping {
+export interface CountryNameToCodeMapping {
   [key: string]: string;
 }
 
