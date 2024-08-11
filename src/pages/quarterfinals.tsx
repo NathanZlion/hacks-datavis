@@ -1,16 +1,17 @@
 import CountCard from "@/components/Card/card.component";
 import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { BarChart } from "@tremor/react";
-import { Teams } from "@/data/quarterfinalsData";
+import { Teams } from "@/data/teamData";
 import TeamCardModal from "@/components/teamCardModal";
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CardDescription, CardTitle } from "@/components/ui/card";
+import { CardDescription  } from "@/components/ui/card";
 
 export default function Quarterfinals() {
 
     const dataFormatter = (number: number) =>
         Intl.NumberFormat('us').format(number).toString();
+    
 
     // Initialize an empty object to count category occurrences
     const categoryCounts: { [key: string]: number } = {};
@@ -25,10 +26,18 @@ export default function Quarterfinals() {
     });
 
     // Create the final data format
-    const chartData = [{
-        name: 'team data',
-        ...categoryCounts
-    }];
+    const chartData = [
+        ...(
+            Object.keys(categoryCounts).map((category) => {
+                return {
+                    name: category,
+                    "Number Of Projects": categoryCounts[category],
+                }
+            })
+        )
+    ];
+
+    console.log(chartData)
 
     const CATEGORIES = [
         "AI Driven Artistry and Innovation",
@@ -68,10 +77,22 @@ export default function Quarterfinals() {
 
                 {/* category information */}
                 <div className="col-span-1 md:col-span-3 lg:col-span-9" >
-                    <BarChart index="name" data={chartData} categories={CATEGORIES} colors={['blue', 'red', 'green', 'orange', 'purple', 'biege', 'violet', 'yellow', 'indigo']}
+                    <h3 className="text-lg font-medium text-tremor-content-strong dark:text-dark-tremor-content-strong">
+                        Number of projects per category
+                    </h3>
+
+                    <BarChart
+                        index="name"
+                        data={chartData}
+                        categories={["Number Of Projects"]}
                         valueFormatter={dataFormatter}
+                        customTooltip={customTooltip}
                         yAxisWidth={48}
                         className="w-full"
+                        showAnimation={true}
+                        allowDecimals={false}
+                        barCategoryGap={5}
+                        colors={["blue"]}
                     />
                 </div>
             </div>
@@ -91,8 +112,9 @@ export default function Quarterfinals() {
                             key={index}
                             layoutId={index.toString()}
                             onClick={() => openModal(index)}
-                            whileHover={{ scale: 1.05, zIndex: 30 }}
+                            whileHover={{ scale: 1.05 }}
                             whileDrag={{ scale: 1.05 }}
+                            exit={{ scale: 0 }}
                             className="p-5 border lg:container h-full lg:h-1/2  max-w-full w-2/3 \
                             lg:w-1/3 hover:cursor-pointer hover:shadow-sm backdrop-blur-sm hover:shadow-secondary hover:z-50 rounded-lg"
                         >
@@ -104,7 +126,7 @@ export default function Quarterfinals() {
                                 {/* CardHeader */}
                                 <motion.div className='p-0 m-0 row-auto' >
                                     <motion.div className='text-nowrap'>
-                                        <CardTitle className="underline">{team.TeamName}</CardTitle>
+                                        <h1 className="underline text-2xl font-bold">{team.TeamName}</h1>
                                         <CardDescription>{team.category}</CardDescription>
                                     </motion.div>
                                 </motion.div>
@@ -138,7 +160,6 @@ export default function Quarterfinals() {
                                 team={Teams[_selectedId]}
                                 handleClose={closeModal}
                                 layoutId={_selectedId.toString()}
-                                className="rounded"
                                 dragConstraints={modalDragConstraintsRef}
                             />
                         )}
@@ -148,3 +169,29 @@ export default function Quarterfinals() {
         </div>
     );
 }
+
+type CustomTooltipTypeBar = {
+    payload: any;
+    active: boolean | undefined;
+    label: any;
+};
+
+const customTooltip = (props: CustomTooltipTypeBar) => {
+    const { payload, active } = props;
+    if (!active || !payload) return null;
+    return (
+        <div className="w-56 rounded-tremor-default border border-secondary-foreground bg-secondary dark:bg-primary-foreground p-2 text-tremor-default shadow-tremor-dropdown">
+            {payload.map((category: any, idx: number) => (
+                <div key={idx} className="flex flex-1 space-x-2.5">
+                    <div
+                        className={`flex w-1 flex-col bg-${category.color}-500 rounded`}
+                    />
+                    <div className="space-y-1">
+                        <p className="text-accent-foreground">{category.dataKey}    </p>
+                        <p className="font-medium text-accent-foreground"> {category.value} </p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+};
