@@ -13,7 +13,7 @@ export const Count = () => {
         <div className="flex gap-6 flex-col">
             <div className="text-center text-2xl block lg:hidden"> Participation Statistics </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 justify-start md:justify-center gap-3 text-center  mx-auto m-auto w-full px-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 justify-start md:justify-center gap-3 text-center mx-auto m-auto w-full px-auto">
                 {/* Total registration plus, idea submission without registering */}
                 <CountCard cardTitle={"Total Registration"} cardValue={people ? people.totalParticipants : 0} cardIcon={faClipboardUser} />
 
