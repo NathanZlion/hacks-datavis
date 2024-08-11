@@ -13,6 +13,7 @@ import {
 import Overview from './pages/overview';
 import Quarterfinals from './pages/quarterfinals';
 import Semifinals from './pages/semifinals';
+import GrandFinal from './pages/grandFinal';
 
 function App() {
 
@@ -23,24 +24,27 @@ function App() {
       enableSystem
       disableTransitionOnChange
     >
+
       <Analytics /> {/* To collect analytics */}
       <div className='relative bg-background text-primary flex flex-col'>
 
         <Navbar />
-        <TabGroup className="px-5 flex-1 relative">
+        <TabGroup className="flex-1 relative flex flex-col" defaultIndex={1} >
 
-          <TabList className="container mt-3 flex justify-center md:justify-start sticky top-16 from-primary-foreground z-10 backdrop-blur-lg">
-            <Tab>Overview</Tab>
-            <Tab>Quarterfinals</Tab>
-            <Tab>Semifinals</Tab>
+          <TabList variant={'line'} className="p-0 m-0 lg:container mt-3 flex justify-between md:justify-start fixed bottom-0 md:sticky md:top-16 from-primary-foreground z-10 backdrop-blur-md order-2 lg:order-1 w-full">
+            <Tab className='px-2 mx-0 rounded-sm'> Overview </Tab>
+            <Tab className='px-2 mx-0 rounded-sm'>Quarterfinals</Tab>
+            <Tab className='px-2 mx-0 rounded-sm'>Semifinals</Tab>
+            <Tab className='px-2 mx-0 rounded-sm'>Grandfinale</Tab>
           </TabList>
 
-          <TabPanels>
+          <TabPanels className='order-1 px-5'>
             <TabPanel> <Overview /> </TabPanel>
             <TabPanel> <Quarterfinals /> </TabPanel>
             <TabPanel> <Semifinals /> </TabPanel>
-
+            <TabPanel> <GrandFinal /> </TabPanel>
           </TabPanels>
+
         </TabGroup>
         <Footer />
       </div>
