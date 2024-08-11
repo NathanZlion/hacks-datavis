@@ -126,7 +126,7 @@ export const Teams: Team[] = [
         "Countries": [
             "Ethiopia",
             "Ethiopia",
-            "ghanna",
+            "ghana",
             "Kenya",
             "malawi"
         ],
