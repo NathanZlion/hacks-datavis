@@ -1,9 +1,9 @@
 import constructionWorker from '@/assets/constructionworker.svg'
 
-export default function Semifinals() {
+export default function GrandFinal() {
     return (
         <div className="p-2 lg:container flex flex-col gap-0 h-[50vh]">
-            <h1 className='text-3xl '>Semifinals</h1>
+            <h1 className='text-3xl '>Grand Final</h1>
             <div className="flex flex-col border justify-center align-middle h-full bg-transparent object-contain"
                 style={{
                     backgroundImage: `url(${constructionWorker})`,
